@@ -95,7 +95,16 @@
 
 ### Az elejére el kell helyezni a cross origin engedélyezéséhez:
 
-    <? header("Access-Control-Allow-Origin: *?>
+    <? if (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER['HTTP_ORIGIN'] == 'https://bider01.github.io') {
+        header("Access-Control-Allow-Origin: https://bider01.github.io"); 
+        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+          if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+            header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+          if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+            header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+          exit(0);
+        }   
+        } ?>
 
 ## Parancs a GitHub Page deploy előkészítéséhez:
 
