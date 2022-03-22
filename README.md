@@ -1,8 +1,8 @@
 [![pages-build-deployment](https://github.com/Bider01/ticket-reports/actions/workflows/pages/pages-build-deployment/badge.svg?branch=gh-pages)](https://github.com/Bider01/ticket-reports/actions/workflows/pages/pages-build-deployment)
 
-#A következő kódrészletek hozzáadása szükséges a FooEvents-hez
+# A következő kódrészletek hozzáadása szükséges a FooEvents-hez
 
-##fooevents/classes/apihelper.php
+## fooevents/classes/apihelper.php
 
     function getEventUpdatedTicketsWithStatus($eventID, $since) {
     
@@ -51,7 +51,7 @@
     
     }
 
-##fooevents/classes/restapihelper.php
+## fooevents/classes/restapihelper.php
 
     public function fooevents_callback_get_check_in(WP_REST_Request $request) {
         $authorize_result = $this->fooevents_is_authorized_user($request->get_headers());
@@ -77,7 +77,7 @@
         exit();
     }
 
-Kódrészlet amit le ki kell egészíteni:
+### Kódrészlet amit le ki kell egészíteni:
 
     $rest_api_endpoints = array('login_status',
             'get_all_data',
@@ -93,10 +93,10 @@ Kódrészlet amit le ki kell egészíteni:
             'get_check_in'
     );
 
-Az elejére el kell helyezni a cross origin engedélyezéséhez:
+### Az elejére el kell helyezni a cross origin engedélyezéséhez:
 
     <? header("Access-Control-Allow-Origin: *?>
 
-Parancs a GitHub Page deploy előkészítéséhez:
+## Parancs a GitHub Page deploy előkészítéséhez:
 
     ng build --output-path docs --base-href /ticket-reports/
