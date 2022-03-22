@@ -1,0 +1,147 @@
+﻿<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+<p *ngIf="lastCheck != 0">Utolsó frissítés: {{lastCheck*1000 | date:"yyyy.MM.dd. HH:mm:ss"}}
+  <button mat-icon-button color="info" aria-label="Refresh" (click)="hardReload()" class="refresh">
+  <mat-icon>autorenew</mat-icon></button></p>
+<p *ngIf="lastCheck == 0">betöltés...</p>
+<div id="card-container" *ngIf="lastCheck != 0">
+  <mat-card class="check-in-stat">
+    <mat-card-title>Belépések</mat-card-title>
+    <mat-card-subtitle>összes</mat-card-subtitle>
+    <mat-card-content>
+      <p>{{checkedIn}}<span class="little-number">/{{event.eventTickets.length}}</span></p>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="check-in-stat">
+    <mat-card-title>Belépések</mat-card-title>
+    <mat-card-subtitle>utolsó 5 perc</mat-card-subtitle>
+    <mat-card-content>
+      <p>{{checkedIn5}}</p>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="check-in-stat">
+    <mat-card-title>MFF</mat-card-title>
+    <mat-card-subtitle>összes</mat-card-subtitle>
+    <mat-card-content>
+      <p>{{checkedInMFF}}<span class="little-number">/{{ticketMFFSum}}</span></p>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="card mt-4">
+    <h4 class="card-header">Belépések</h4>
+    <div class="card-body">
+      <mat-form-field appearance="standard">
+        <mat-label>Keresés</mat-label>
+        <input matInput (keyup)="applyFilter()" placeholder="Keresés" [(ngModel)]="search" #input>
+      </mat-form-field>
+
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort #TableOneSort="matSort" matSortActive="time" matSortDirection="desc" matSortDisableClear>
+          <!-- ID Column -->
+          <ng-container matColumnDef="ticketId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="wooCommerceEventsTicketID"> Meghívó id </th>
+            <td mat-cell *matCellDef="let row"><a (click)="search2 = row.wooCommerceEventsTicketID; applyFilter2();">#{{row.wooCommerceEventsTicketID}}</a></td>
+          </ng-container>
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Név </th>
+            <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Státusz </th>
+            <td mat-cell *matCellDef="let row" [ngClass]="{'not-normal' : row.status != 'Checked In'}"> {{row.status}} </td>
+          </ng-container>
+
+          <!-- Time Column -->
+          <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Idő </th>
+            <td mat-cell *matCellDef="let row"> {{row.time*1000 | date:"yyyy.MM.dd. HH:mm:ss"}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
+        </table>
+
+        <mat-paginator #TableOnePaginator="matPaginator"  [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+      </div>
+    </div>
+</div>
+<div class="card mt-4">
+  <h4 class="card-header">Meghívók</h4>
+  <div class="card-body">
+    <mat-form-field appearance="standard">
+      <mat-label>Keresés</mat-label>
+      <input matInput (keyup)="applyFilter2()" placeholder="Keresés meghívó id alapján" [(ngModel)]="search2" #input>
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="ticketDataSource" #TableTwoSort="matSort" matSort>
+        <!-- ID Column -->
+        <ng-container matColumnDef="ticketId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="WooCommerceEventsTicketID"> Mehívó id </th>
+          <td mat-cell *matCellDef="let row"> <a (click)="search = row.WooCommerceEventsTicketID; applyFilter();">#{{row.WooCommerceEventsTicketID}}</a> </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Név </th>
+          <td mat-cell *matCellDef="let row"> {{row.WooCommerceEventsCustomAttendeeFields['Név/Name']}} </td>
+        </ng-container>
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="attendeeId">
+          <th mat-header-cell *matHeaderCellDef > ID </th>
+          <td mat-cell *matCellDef="let row"> {{row.WooCommerceEventsCustomAttendeeFields['ID']}} </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="WooCommerceEventsStatus"> Státusz </th>
+          <td mat-cell *matCellDef="let row" [ngClass]="{'not-normal' : row.WooCommerceEventsStatus != 'Checked In' && row.WooCommerceEventsStatus != 'Not Checked In'}"> {{row.WooCommerceEventsStatus}}
+            <button mat-icon-button color="accent" aria-label="Unpaid" (click)="updateStatus(row, 'Unpaid')">
+              <mat-icon>money_off</mat-icon>
+            </button>
+            <button mat-icon-button color="accent" aria-label="Canceled" (click)="updateStatus(row, 'Canceled')">
+              <mat-icon>close</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" aria-label="Checked In" (click)="updateStatus(row, 'Checked In')">
+              <mat-icon>check_circle</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" aria-label="Not Checked In" (click)="updateStatus(row, 'Not Checked In')">
+              <mat-icon>check_circle_outline</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- variation Column -->
+        <ng-container matColumnDef="variation">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="WooCommerceEventsVariationID"> Típus </th>
+          <td mat-cell *matCellDef="let row"> {{ row.WooCommerceEventsVariationID | variationPipe }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="ticketDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: ticketDisplayedColumns;"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
+
+      <mat-paginator #TableTwoPaginator="matPaginator" [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
+  </div>
+</div>
+
+<div class="connection-error" *ngIf="onlineOffline" (click)="hardReload()">
+  <button mat-fab color="warn" aria-label="Connection error">
+    <mat-icon>signal_wifi_off</mat-icon>
+  </button>
+</div>

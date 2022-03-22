@@ -1,0 +1,11 @@
+{
+  "/api/*": {
+    "target": "https://meghivo.iocs.hu/wp-json/fooevents/v1/",
+    "secure": true,
+    "logLevel": "info",
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/": ""
+    }
+  }
+}

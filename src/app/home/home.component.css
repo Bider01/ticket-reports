@@ -1,0 +1,49 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+.not-normal {
+  color: red;
+}
+
+mat-card {
+  max-width: 400px;
+  margin: 10px;
+}
+
+#card-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.mat-card-content p {
+  font-size: 60px;
+  text-align: -webkit-center;
+  padding: 15px;
+}
+
+.little-number {
+  font-size: 20px;
+  color: gray;
+}
+
+.mat-icon-button {
+  width: 25px;
+  height: 25px;
+}
+
+.connection-error {
+  bottom: 20px;
+  right: 20px;
+  position: fixed;
+}
+
