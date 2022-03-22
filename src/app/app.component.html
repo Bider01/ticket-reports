@@ -1,4 +1,4 @@
-﻿<a class="nav-item nav-link" (click)="logout()" style="float: right;">Kijelentkezés</a>
+﻿<a class="nav-item nav-link" (click)="logout()" style="float: right;" *ngIf="user && user.username">Kijelentkezés</a>
 <!-- main app container -->
 <div class="container">
     <router-outlet></router-outlet>

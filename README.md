@@ -94,3 +94,7 @@ Kódrészlet amit le ki kell egészíteni:
 Az elejére el kell helyezni a cross origin engedélyezéséhez:
 
     <? header("Access-Control-Allow-Origin: *?>
+
+Parancs a GitHub Page deploy előkészítéséhez:
+
+    ng build --output-path docs --base-href /ticket-reports/
