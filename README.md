@@ -1,3 +1,5 @@
+[![pages-build-deployment](https://github.com/Bider01/ticket-reports/actions/workflows/pages/pages-build-deployment/badge.svg?branch=gh-pages)](https://github.com/Bider01/ticket-reports/actions/workflows/pages/pages-build-deployment)
+
 #A következő kódrészletek hozzáadása szükséges a FooEvents-hez
 
 ##fooevents/classes/apihelper.php
