@@ -90,3 +90,7 @@ Kódrészlet amit le ki kell egészíteni:
 
             'get_check_in'
     );
+
+Az elejére el kell helyezni a cross origin engedélyezéséhez:
+
+    <? header("Access-Control-Allow-Origin: *?>
