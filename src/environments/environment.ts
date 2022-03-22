@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    apiUrl: '/api'
+    apiUrl: 'https://meghivo.iocs.hu/wp-json/fooevents/v1/'
 };
 
 /*

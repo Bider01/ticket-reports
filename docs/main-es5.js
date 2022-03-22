@@ -2939,7 +2939,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     var environment = {
       production: false,
-      apiUrl: '/api'
+      apiUrl: 'https://meghivo.iocs.hu/wp-json/fooevents/v1/'
     };
     /*
      * For easier debugging in development mode, you can import the following file
