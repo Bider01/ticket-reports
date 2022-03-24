@@ -49,6 +49,11 @@ mat-checkbox {
   margin: 0 10px;
 }
 
+.mat-icon-button {
+  width: 25px;
+  height: 25px;
+}
+
 @media (max-width: 768px) {
   mat-card {
     min-width: 45%;
