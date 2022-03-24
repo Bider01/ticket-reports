@@ -8,7 +8,7 @@ import {MatSort} from '@angular/material/sort';
 import {interval} from 'rxjs';
 import {WooComerceEvent} from '@app/_models/event';
 import {Ticket} from '@app/_models/ticket';
-import {element} from 'protractor';
+import * as XLSX from 'xlsx';
 
 @Component({templateUrl: 'home.component.html', styleUrls: ['home.component.css']})
 export class HomeComponent implements OnInit {
@@ -18,7 +18,8 @@ export class HomeComponent implements OnInit {
   ticketDataSource: MatTableDataSource<Ticket>;
   search = '';
   search2 = '';
-
+  checkInMode = false;
+  adminMode = false;
   onlineOffline: boolean;
 
   @ViewChild('TableOnePaginator', {static: true}) tableOnePaginator: MatPaginator;
@@ -123,15 +124,15 @@ export class HomeComponent implements OnInit {
 
   hardReload() {
     this.loading = true;
-    this.checkIns = [];
-    this.checkedIn = 0;
-    this.checkedIn5 = 0;
-    this.checkedInMFF = 0;
-    this.checkedInMFF = 0;
-    this.ticketMFFSum = 0;
-    this.lastCheck = 0;
 
     this.dataService.getAll().subscribe(data => {
+      this.checkIns = [];
+      this.checkedIn = 0;
+      this.checkedIn5 = 0;
+      this.checkedInMFF = 0;
+      this.checkedInMFF = 0;
+      this.ticketMFFSum = 0;
+      this.lastCheck = 0;
       if (data.message === false) {
         this.authenticationService.logout();
         return;
@@ -170,5 +171,20 @@ export class HomeComponent implements OnInit {
     this.dataService.deleteTestTickets().subscribe(data => {
       console.log('delete test tickets:' + data);
     });
+  }
+
+  exportExcel() {
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.event.eventTickets);
+    const ws2: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.checkIns);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Tickets');
+    XLSX.utils.book_append_sheet(wb, ws2, 'Check In');
+
+    /* save to file */
+    XLSX.writeFile(wb, 'tickets_' + new Date().toLocaleDateString() + '.xlsx');
+
   }
 }
