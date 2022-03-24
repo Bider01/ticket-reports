@@ -170,6 +170,7 @@ export class HomeComponent implements OnInit {
   deleteTestTickets() {
     this.dataService.deleteTestTickets().subscribe(data => {
       console.log('delete test tickets:' + data);
+      this.loadData();
     });
   }
 
@@ -184,7 +185,7 @@ export class HomeComponent implements OnInit {
     XLSX.utils.book_append_sheet(wb, ws2, 'Check In');
 
     /* save to file */
-    XLSX.writeFile(wb, 'tickets_' + new Date().toLocaleDateString() + '.xlsx');
+    XLSX.writeFile(wb, 'tickets_' + new Date().toLocaleTimeString() + '.xlsx');
 
   }
 }

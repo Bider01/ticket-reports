@@ -81,10 +81,7 @@
       <mat-checkbox class="example-margin" [(ngModel)]="checkInMode">Kapu</mat-checkbox>
       <mat-checkbox class="example-margin" [(ngModel)]="adminMode">Admin</mat-checkbox>
     </section>
-    <a (click)="search2 = '6995'; applyFilter2();">SE/alap</a>
-    <a (click)="search2 = '6996'; applyFilter2();">SE/MFF</a>
-    <a (click)="search2 = '6997'; applyFilter2();">Külsős/alap</a>
-    <a (click)="search2 = '6998'; applyFilter2();">Külsős/MFF</a>
+    <a (click)="search2 = '6995'; applyFilter2();">SE/alap</a> <a (click)="search2 = '6996'; applyFilter2();">SE/MFF</a> <a (click)="search2 = '6997'; applyFilter2();">Külsős/alap</a> <a (click)="search2 = '6998'; applyFilter2();">Külsős/MFF</a>
     <mat-form-field appearance="standard">
       <mat-label>Keresés</mat-label>
       <input matInput (keyup)="applyFilter2()" placeholder="Keresés meghívó id alapján" [(ngModel)]="search2" #input>
@@ -155,4 +152,4 @@
   </button>
 </div>
 
-<button (click)="exportExcel()">Adatok letöltése</button>
+<a (click)="exportExcel()">Adatok letöltése <mat-icon>get_app</mat-icon></a>
