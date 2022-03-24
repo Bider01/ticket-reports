@@ -8,8 +8,10 @@ import {AppRoutingModule} from './app-routing.module';
 
 import {BasicAuthInterceptor, ErrorInterceptor, VariationPipe} from './_helpers';
 import {HomeComponent} from './home';
-import {LoginComponent} from './login';;
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import {LoginComponent} from './login';
+import {MatTableResponsiveModule} from './home/mat-table-responsive/mat-table-responsive.module';
+
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
@@ -40,7 +42,11 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatButtonModule,
     FormsModule,
     MatCheckboxModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatTableResponsiveModule
+  ],
+  exports: [
+    MatTableResponsiveModule
   ],
   declarations: [
     AppComponent,

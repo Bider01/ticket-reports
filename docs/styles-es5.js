@@ -63,15 +63,15 @@
   },
 
   /***/
-  "./node_modules/css-loader/dist/cjs.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/less-loader/dist/cjs.js?!./src/styles.less":
+  "./node_modules/css-loader/dist/cjs.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./src/styles.scss":
   /*!************************************************************************************************************************************************************************!*\
-    !*** ./node_modules/css-loader/dist/cjs.js??ref--14-1!./node_modules/postcss-loader/src??embedded!./node_modules/less-loader/dist/cjs.js??ref--14-3!./src/styles.less ***!
+    !*** ./node_modules/css-loader/dist/cjs.js??ref--13-1!./node_modules/postcss-loader/src??embedded!./node_modules/sass-loader/dist/cjs.js??ref--13-3!./src/styles.scss ***!
     \************************************************************************************************************************************************************************/
 
   /*! no static exports found */
 
   /***/
-  function node_modulesCssLoaderDistCjsJsNode_modulesPostcssLoaderSrcIndexJsNode_modulesLessLoaderDistCjsJsSrcStylesLess(module, exports, __webpack_require__) {
+  function node_modulesCssLoaderDistCjsJsNode_modulesPostcssLoaderSrcIndexJsNode_modulesSassLoaderDistCjsJsSrcStylesScss(module, exports, __webpack_require__) {
     // Imports
     var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(
     /*! ../node_modules/css-loader/dist/runtime/api.js */
@@ -79,13 +79,13 @@
 
     exports = ___CSS_LOADER_API_IMPORT___(true); // Module
 
-    exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\na {\n  cursor: pointer;\n}\nhtml,\nbody {\n  height: 100%;\n}\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif;\n}\n", "", {
+    exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\na {\n  cursor: pointer;\n}\nhtml, body {\n  height: 100%;\n}\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif;\n}", "", {
       "version": 3,
-      "sources": ["styles.less", "W:/iöcs/ticket-reports/src/styles.less"],
+      "sources": ["W:\\iöcs\\ticket-reports/src\\styles.scss", "styles.scss"],
       "names": [],
-      "mappings": "AAAA,8EAA8E;ACC9E;EAAI,eAAA;ADEJ;ACDA;;EAAa,YAAA;ADKb;ACJA;EAAO,SAAA;EAAW,iDAAA;ADQlB",
-      "file": "styles.less",
-      "sourcesContent": ["/* You can add global styles to this file, and also import other style files */\na {\n  cursor: pointer;\n}\nhtml,\nbody {\n  height: 100%;\n}\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif;\n}\n", "/* You can add global styles to this file, and also import other style files */\na { cursor: pointer }\nhtml, body { height: 100%; }\nbody { margin: 0; font-family: Roboto, \"Helvetica Neue\", sans-serif; }\n"]
+      "mappings": "AAAA,8EAAA;AACA;EAAI,eAAA;ACEJ;ADDA;EAAa,YAAA;ACKb;ADJA;EAAO,SAAA;EAAW,iDAAA;ACSlB",
+      "file": "styles.scss",
+      "sourcesContent": ["/* You can add global styles to this file, and also import other style files */\r\na { cursor: pointer }\r\nhtml, body { height: 100%; }\r\nbody { margin: 0; font-family: Roboto, \"Helvetica Neue\", sans-serif; }\r\n", "/* You can add global styles to this file, and also import other style files */\na {\n  cursor: pointer;\n}\n\nhtml, body {\n  height: 100%;\n}\n\nbody {\n  margin: 0;\n  font-family: Roboto, \"Helvetica Neue\", sans-serif;\n}"]
     }]); // Exports
 
     module.exports = exports;
@@ -484,22 +484,22 @@
   },
 
   /***/
-  "./src/styles.less":
+  "./src/styles.scss":
   /*!*************************!*\
-    !*** ./src/styles.less ***!
+    !*** ./src/styles.scss ***!
     \*************************/
 
   /*! no static exports found */
 
   /***/
-  function srcStylesLess(module, exports, __webpack_require__) {
+  function srcStylesScss(module, exports, __webpack_require__) {
     var api = __webpack_require__(
     /*! ../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */
     "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 
     var content = __webpack_require__(
-    /*! !../node_modules/css-loader/dist/cjs.js??ref--14-1!../node_modules/postcss-loader/src??embedded!../node_modules/less-loader/dist/cjs.js??ref--14-3!./styles.less */
-    "./node_modules/css-loader/dist/cjs.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/less-loader/dist/cjs.js?!./src/styles.less");
+    /*! !../node_modules/css-loader/dist/cjs.js??ref--13-1!../node_modules/postcss-loader/src??embedded!../node_modules/sass-loader/dist/cjs.js??ref--13-3!./styles.scss */
+    "./node_modules/css-loader/dist/cjs.js?!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./src/styles.scss");
 
     content = content.__esModule ? content["default"] : content;
 
@@ -519,7 +519,7 @@
   /***/
   3:
   /*!************************************************************************************************!*\
-    !*** multi ./node_modules/@angular/material/prebuilt-themes/indigo-pink.css ./src/styles.less ***!
+    !*** multi ./node_modules/@angular/material/prebuilt-themes/indigo-pink.css ./src/styles.scss ***!
     \************************************************************************************************/
 
   /*! no static exports found */
@@ -531,8 +531,8 @@
     "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css");
 
     module.exports = __webpack_require__(
-    /*! W:\iöcs\ticket-reports\src\styles.less */
-    "./src/styles.less");
+    /*! W:\iöcs\ticket-reports\src\styles.scss */
+    "./src/styles.scss");
     /***/
   }
 }, [[3, "runtime"]]]);

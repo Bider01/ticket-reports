@@ -1,6 +1,6 @@
 ﻿<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 <p *ngIf="lastCheck != 0">Utolsó frissítés: {{lastCheck*1000 | date:"yyyy.MM.dd. HH:mm:ss"}}
-  <button mat-icon-button color="info" aria-label="Refresh" (click)="hardReload()" class="refresh">
+  <button mat-icon-button color="primary" aria-label="Refresh" (click)="hardReload()" class="refresh">
   <mat-icon>autorenew</mat-icon></button></p>
 <p *ngIf="lastCheck == 0">betöltés...</p>
 <div id="card-container" *ngIf="lastCheck != 0">
@@ -50,7 +50,7 @@
       </mat-form-field>
 
       <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource" matSort #TableOneSort="matSort" matSortActive="time" matSortDirection="desc" matSortDisableClear>
+        <table mat-table matTableResponsive [dataSource]="dataSource" matSort #TableOneSort="matSort" matSortActive="time" matSortDirection="desc" matSortDisableClear>
           <!-- ID Column -->
           <ng-container matColumnDef="ticketId">
             <th mat-header-cell *matHeaderCellDef mat-sort-header="wooCommerceEventsTicketID"> Meghívó id </th>
@@ -110,7 +110,7 @@
     </mat-form-field>
 
     <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="ticketDataSource" #TableTwoSort="matSort" matSort>
+      <table mat-table matTableResponsive [dataSource]="ticketDataSource" #TableTwoSort="matSort" matSort>
         <!-- ID Column -->
         <ng-container matColumnDef="ticketId">
           <th mat-header-cell *matHeaderCellDef mat-sort-header="WooCommerceEventsTicketID"> Mehívó id </th>

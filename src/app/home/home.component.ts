@@ -10,7 +10,7 @@ import {WooComerceEvent} from '@app/_models/event';
 import {Ticket} from '@app/_models/ticket';
 import * as XLSX from 'xlsx';
 
-@Component({templateUrl: 'home.component.html', styleUrls: ['home.component.css']})
+@Component({templateUrl: 'home.component.html', styleUrls: ['home.component.scss', 'mat-table-responsive/mat-table-responsive.directive.scss']})
 export class HomeComponent implements OnInit {
   displayedColumns: string[] = ['ticketId', 'name', 'status', 'time'];
   ticketDisplayedColumns: string[] = ['ticketId', 'name', 'attendeeId', 'status', 'variation'];
@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
   checkedIn5: number;
   checkedInMFF: number;
   ticketMFFSum: number;
-  lastCheck: number = 0;
+  lastCheck = 0;
   event: WooComerceEvent;
 
   constructor(private dataService: DataService, private authenticationService: AuthenticationService) { }
@@ -117,7 +117,7 @@ export class HomeComponent implements OnInit {
       this.loading = false;
       this.onlineOffline = false;
       this.calculateLast5();
-    }, error => {
+    }, () => {
       this.onlineOffline = true;
     });
   }
@@ -156,13 +156,13 @@ export class HomeComponent implements OnInit {
       this.applyFilter2();
 
       this.loadData(false);
-    }, error => {
+    }, () => {
       this.onlineOffline = true;
     });
   }
 
   updateStatus(ticket: Ticket, status: string) {
-    this.dataService.updateStatus(ticket.WooCommerceEventsTicketID, status).subscribe(data => {
+    this.dataService.updateStatus(ticket.WooCommerceEventsTicketID, status).subscribe(() => {
       ticket.WooCommerceEventsStatus = status;
     });
   }
