@@ -165,4 +165,10 @@ export class HomeComponent implements OnInit {
       ticket.WooCommerceEventsStatus = status;
     });
   }
+
+  deleteTestTickets() {
+    this.dataService.deleteTestTickets().subscribe(data => {
+      console.log('delete test tickets:' + data);
+    });
+  }
 }

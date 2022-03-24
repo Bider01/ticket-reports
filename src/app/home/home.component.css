@@ -47,3 +47,6 @@ mat-card {
   position: fixed;
 }
 
+a.mini-link {
+  color: lightgray;
+}
