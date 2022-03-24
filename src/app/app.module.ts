@@ -20,26 +20,28 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatPaginatorModule,
-        MatTableModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSortModule,
-        MatCardModule,
-        MatProgressBarModule,
-        MatIconModule,
-        MatButtonModule,
-        FormsModule,
-        MatCheckboxModule
-    ],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSortModule,
+    MatCardModule,
+    MatProgressBarModule,
+    MatIconModule,
+    MatButtonModule,
+    FormsModule,
+    MatCheckboxModule,
+    MatButtonToggleModule
+  ],
   declarations: [
     AppComponent,
     HomeComponent,

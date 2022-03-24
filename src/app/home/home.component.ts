@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
   checkedIn5: number;
   checkedInMFF: number;
   ticketMFFSum: number;
-  lastCheck: number;
+  lastCheck: number = 0;
   event: WooComerceEvent;
 
   constructor(private dataService: DataService, private authenticationService: AuthenticationService) { }
@@ -169,13 +169,12 @@ export class HomeComponent implements OnInit {
 
   deleteTestTickets() {
     this.dataService.deleteTestTickets().subscribe(data => {
-      console.log('delete test tickets:' + data);
-      this.loadData();
+      console.log('delete test tickets ' + data);
+      this.hardReload();
     });
   }
 
   exportExcel() {
-
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.event.eventTickets);
     const ws2: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.checkIns);
 

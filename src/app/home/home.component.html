@@ -25,11 +25,18 @@
       <p>{{checkedInMFF}}<span class="little-number">/{{ticketMFFSum}}</span></p>
     </mat-card-content>
   </mat-card>
+  <mat-card class="check-in-stat">
+    <mat-card-title>Letöltés</mat-card-title>
+    <mat-card-subtitle>Adatok letöltése (xlsx)</mat-card-subtitle>
+    <mat-card-content>
+      <p><a (click)="exportExcel()"><mat-icon aria-label="Letöltés" style="font-size: 48px;width: 48px;height: 48px;">get_app</mat-icon></a></p>
+    </mat-card-content>
+  </mat-card>
 </div>
 <div class="card mt-4">
     <h4 class="card-header">Belépések</h4>
     <div class="card-body">
-      <a (click)="deleteTestTickets()" class="mini-link">Teszt jegy logok törlése</a>
+      <button mat-raised-button (click)="deleteTestTickets()">Teszt jegy logok törlése</button>
       <mat-form-field appearance="standard">
         <mat-label>Keresés</mat-label>
         <input matInput (keyup)="applyFilter()" placeholder="Keresés" [(ngModel)]="search" #input>
@@ -81,10 +88,18 @@
       <mat-checkbox class="example-margin" [(ngModel)]="checkInMode">Kapu</mat-checkbox>
       <mat-checkbox class="example-margin" [(ngModel)]="adminMode">Admin</mat-checkbox>
     </section>
-    <a (click)="search2 = '6995'; applyFilter2();">SE/alap</a> <a (click)="search2 = '6996'; applyFilter2();">SE/MFF</a> <a (click)="search2 = '6997'; applyFilter2();">Külsős/alap</a> <a (click)="search2 = '6998'; applyFilter2();">Külsős/MFF</a>
+    <p>
+      Keresés típusra:
+      <mat-button-toggle-group #variation="matButtonToggleGroup">
+        <mat-button-toggle (click)="search2 = '6995'; applyFilter2();">SE/alap</mat-button-toggle>
+        <mat-button-toggle (click)="search2 = '6996'; applyFilter2();">SE/MFF</mat-button-toggle>
+        <mat-button-toggle (click)="search2 = '6997'; applyFilter2();">Külsős/alap</mat-button-toggle>
+        <mat-button-toggle (click)="search2 = '6998'; applyFilter2();">Külsős/MFF</mat-button-toggle>
+      </mat-button-toggle-group>
+    </p>
     <mat-form-field appearance="standard">
       <mat-label>Keresés</mat-label>
-      <input matInput (keyup)="applyFilter2()" placeholder="Keresés meghívó id alapján" [(ngModel)]="search2" #input>
+      <input matInput (keyup)="applyFilter2()" (ngModelChange)="variation.value = null" placeholder="Keresés meghívó id alapján" [(ngModel)]="search2" #input>
     </mat-form-field>
 
     <div class="mat-elevation-z8">
@@ -151,5 +166,3 @@
     <mat-icon>signal_wifi_off</mat-icon>
   </button>
 </div>
-
-<a (click)="exportExcel()">Adatok letöltése <mat-icon>get_app</mat-icon></a>
