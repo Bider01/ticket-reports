@@ -26,6 +26,13 @@
     </mat-card-content>
   </mat-card>
   <mat-card class="check-in-stat">
+    <mat-card-title>Belépések</mat-card-title>
+    <mat-card-subtitle>fizikaival - becsült</mat-card-subtitle>
+    <mat-card-content>
+      <p>~{{checkedIn + (checkedIn/event.eventTickets.length * 143) | number: '1.0-0'}}<span class="little-number">/{{event.eventTickets.length + 143}}</span></p>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="check-in-stat">
     <mat-card-title>Letöltés</mat-card-title>
     <mat-card-subtitle>Adatok letöltése (xlsx)</mat-card-subtitle>
     <mat-card-content>
