@@ -33,6 +33,13 @@
     </mat-card-content>
   </mat-card>
   <mat-card class="check-in-stat">
+    <mat-card-title>MFF</mat-card-title>
+    <mat-card-subtitle>fizikaival - becsült</mat-card-subtitle>
+    <mat-card-content>
+      <p>~{{checkedInMFF + (checkedInMFF/ticketMFFSum * 48) | number: '1.0-0'}}}<span class="little-number">/{{ticketMFFSum + 48}}</span></p>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="check-in-stat">
     <mat-card-title>Letöltés</mat-card-title>
     <mat-card-subtitle>Adatok letöltése (xlsx)</mat-card-subtitle>
     <mat-card-content>
