@@ -13,7 +13,7 @@ import * as XLSX from 'xlsx';
 @Component({templateUrl: 'home.component.html', styleUrls: ['home.component.scss', 'mat-table-responsive/mat-table-responsive.directive.scss']})
 export class HomeComponent implements OnInit {
   displayedColumns: string[] = ['ticketId', 'name', 'status', 'time'];
-  ticketDisplayedColumns: string[] = ['ticketId', 'name', 'attendeeId', 'status', 'variation'];
+  ticketDisplayedColumns: string[] = ['ticketId', 'attendeeName', 'attendeeId', 'accompanist', 'status', 'variation'];
   dataSource: MatTableDataSource<CheckIn>;
   ticketDataSource: MatTableDataSource<Ticket>;
   search = '';
@@ -126,6 +126,7 @@ export class HomeComponent implements OnInit {
     this.loading = true;
 
     this.dataService.getAll().subscribe(data => {
+      // init
       this.checkIns = [];
       this.checkedIn = 0;
       this.checkedIn5 = 0;
@@ -133,6 +134,7 @@ export class HomeComponent implements OnInit {
       this.checkedInMFF = 0;
       this.ticketMFFSum = 0;
       this.lastCheck = 0;
+
       if (data.message === false) {
         this.authenticationService.logout();
         return;
@@ -149,6 +151,11 @@ export class HomeComponent implements OnInit {
         if (ticket.WooCommerceEventsVariationID === '6996' || ticket.WooCommerceEventsVariationID === '6998') {
           this.ticketMFFSum++;
         }
+
+        ticket.attendeeId = ticket.WooCommerceEventsCustomAttendeeFields.ID;
+        ticket.attendeeName = ticket.WooCommerceEventsCustomAttendeeFields['Név/Name'];
+        ticket.accompanist = ticket.WooCommerceEventsCustomAttendeeFields['Kísért személy/Accompanied person (Kísérő meghívó esetén kötelező/Obligatory with Companion invitation)']
+        ticket.WooCommerceEventsCustomAttendeeFields = null;
       });
       this.ticketDataSource = new MatTableDataSource(this.event.eventTickets);
       this.ticketDataSource.paginator = this.tableTwoPaginator;

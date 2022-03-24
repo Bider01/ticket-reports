@@ -106,7 +106,7 @@
     </p>
     <mat-form-field appearance="standard">
       <mat-label>Keresés</mat-label>
-      <input matInput (keyup)="applyFilter2()" (ngModelChange)="variation.value = null" placeholder="Keresés meghívó id alapján" [(ngModel)]="search2" #input>
+      <input matInput (keyup)="applyFilter2()" (ngModelChange)="variation.value = null" placeholder="Keresés" [(ngModel)]="search2" #input>
     </mat-form-field>
 
     <div class="mat-elevation-z8">
@@ -118,15 +118,21 @@
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Név </th>
-          <td mat-cell *matCellDef="let row"> {{row.WooCommerceEventsCustomAttendeeFields['Név/Name']}} </td>
+        <ng-container matColumnDef="attendeeName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Név </th>
+          <td mat-cell *matCellDef="let row"> {{row.attendeeName}} </td>
         </ng-container>
 
         <!-- ID Column -->
         <ng-container matColumnDef="attendeeId">
-          <th mat-header-cell *matHeaderCellDef > ID </th>
-          <td mat-cell *matCellDef="let row"> {{row.WooCommerceEventsCustomAttendeeFields['ID']}} </td>
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let row"> {{row.attendeeId}} </td>
+        </ng-container>
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="accompanist">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Kísérő </th>
+          <td mat-cell *matCellDef="let row"> {{row.accompanist}} </td>
         </ng-container>
 
         <!-- Status Column -->

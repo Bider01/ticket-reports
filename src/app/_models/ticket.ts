@@ -1,6 +1,9 @@
 ﻿// noinspection NonAsciiCharacters
 
 export interface Ticket {
+  accompanist: string;
+  attendeeName: string;
+  attendeeId: string;
   WooCommerceEventsTicketID: string;
   WooCommerceEventsStatus: string;
   WooCommerceEventsVariationID: string;
