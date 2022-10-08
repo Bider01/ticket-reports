@@ -1,5 +1,5 @@
 {
-  "name": "angular-9-basic-authentication-example",
+  "name": "ticket-reports",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -23,10 +23,11 @@
     "@angular/router": "~9.1.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
+    "xlsx": "^0.18.4",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~14.2.5",
+    "@angular-devkit/build-angular": "~0.901.1",
     "@angular/cli": "~9.1.1",
     "@angular/compiler-cli": "~9.1.1",
     "@angular/language-service": "~9.1.1",
