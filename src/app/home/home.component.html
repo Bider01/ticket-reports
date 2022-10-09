@@ -175,7 +175,7 @@
         <!-- variation Column -->
         <ng-container matColumnDef="variation">
           <th mat-header-cell *matHeaderCellDef mat-sort-header="WooCommerceEventsVariationID"> Típus </th>
-          <td mat-cell *matCellDef="let row"> {{ row.WooCommerceEventsVariationID | variationPipe }} {{row.variation == 11035 && row.coupon.includes('ceremony') ? '+ műsor' : ''}} </td>
+          <td mat-cell *matCellDef="let row"> {{ row.WooCommerceEventsVariationID | variationPipe }} {{row.WooCommerceEventsVariationID == 11035 && row.coupon.includes('ceremony') ? '+ műsor' : ''}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="ticketDisplayedColumns"></tr>
