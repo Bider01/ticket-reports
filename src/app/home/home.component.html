@@ -6,7 +6,37 @@
   <button mat-icon-button color="primary" aria-label="Refresh" (click)="hardReload()" class="refresh">
   <mat-icon>autorenew</mat-icon></button></p>
 <p *ngIf="lastCheck == 0">betöltés...</p>
-<div id="card-container" *ngIf="lastCheck != 0">
+<div class="card-container" *ngIf="lastCheck != 0">
+  <mat-card class="check-in-stat">
+    <mat-card-title>Gólya/instruktor</mat-card-title>
+    <mat-card-subtitle>összes</mat-card-subtitle>
+    <mat-card-content>
+      <p>{{ticketSum1}}</p>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="check-in-stat">
+    <mat-card-title>SE polgár</mat-card-title>
+    <mat-card-subtitle>összes</mat-card-subtitle>
+    <mat-card-content>
+      <p>{{ticketSum2}}</p>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="check-in-stat">
+    <mat-card-title>Kísérő</mat-card-title>
+    <mat-card-subtitle>összes</mat-card-subtitle>
+    <mat-card-content>
+      <p>{{ticketSum3}}</p>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="check-in-stat">
+    <mat-card-title>Ceremony</mat-card-title>
+    <mat-card-subtitle>összes</mat-card-subtitle>
+    <mat-card-content>
+      <p>{{ticketCouponSum}}</p>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="card-container" *ngIf="lastCheck != 0">
   <mat-card class="check-in-stat">
     <mat-card-title>Belépések</mat-card-title>
     <mat-card-subtitle>összes</mat-card-subtitle>
@@ -19,13 +49,6 @@
     <mat-card-subtitle>utolsó 5 perc</mat-card-subtitle>
     <mat-card-content>
       <p>{{checkedIn5}}</p>
-    </mat-card-content>
-  </mat-card>
-  <mat-card class="check-in-stat">
-    <mat-card-title>Ceremony</mat-card-title>
-    <mat-card-subtitle>összes</mat-card-subtitle>
-    <mat-card-content>
-      <p>{{ticketCouponSum}}</p>
     </mat-card-content>
   </mat-card>
   <mat-card class="check-in-stat">

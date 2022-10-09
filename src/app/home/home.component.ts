@@ -32,6 +32,9 @@ export class HomeComponent implements OnInit {
   checkedIn: number;
   checkedIn5: number;
   ticketCouponSum: number;
+  ticketSum1: number;
+  ticketSum2: number;
+  ticketSum3: number;
   lastCheck = 0;
   autoRefresh = false;
   event: WooComerceEvent;
@@ -126,6 +129,9 @@ export class HomeComponent implements OnInit {
       this.checkedIn = 0;
       this.checkedIn5 = 0;
       this.ticketCouponSum = 0;
+      this.ticketSum1 = 0;
+      this.ticketSum2 = 0;
+      this.ticketSum3 = 0;
       this.lastCheck = 0;
 
       if (data.message === false) {
@@ -142,7 +148,15 @@ export class HomeComponent implements OnInit {
           this.ticketCouponSum++;
         }
 
-        ticket.attendeeId = ticket.WooCommerceEventsCustomAttendeeFields['Fényképes igazolvány szám/ID number'];
+        if (ticket.WooCommerceEventsVariationID === '11035') {
+          this.ticketSum1++;
+        } else if (ticket.WooCommerceEventsVariationID === '11025') {
+          this.ticketSum2++;
+        } else if (ticket.WooCommerceEventsVariationID === '11026') {
+          this.ticketSum3++;
+        }
+
+          ticket.attendeeId = ticket.WooCommerceEventsCustomAttendeeFields['Fényképes igazolvány szám/ID number'];
         ticket.attendeeName = ticket.WooCommerceEventsCustomAttendeeFields['Név/Name'];
         ticket.accompanist = ticket.WooCommerceEventsCustomAttendeeFields['Kísérő neve'];
         ticket.WooCommerceEventsCustomAttendeeFields = null;
