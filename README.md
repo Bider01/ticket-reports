@@ -1,6 +1,8 @@
-#A következő kódrészletek hozzáadása szükséges a FooEvents-hez
+[![pages-build-deployment](https://github.com/Bider01/ticket-reports/actions/workflows/pages/pages-build-deployment/badge.svg?branch=gh-pages)](https://github.com/Bider01/ticket-reports/actions/workflows/pages/pages-build-deployment)
 
-##fooevents/classes/apihelper.php
+# A következő kódrészletek hozzáadása szükséges a FooEvents-hez
+
+## fooevents/classes/apihelper.php
 
     function getEventUpdatedTicketsWithStatus($eventID, $since) {
     
@@ -49,7 +51,7 @@
     
     }
 
-##fooevents/classes/restapihelper.php
+## fooevents/classes/restapihelper.php
 
     public function fooevents_callback_get_check_in(WP_REST_Request $request) {
         $authorize_result = $this->fooevents_is_authorized_user($request->get_headers());
@@ -75,7 +77,7 @@
         exit();
     }
 
-Kódrészlet amit le ki kell egészíteni:
+### Kódrészlet amit le ki kell egészíteni:
 
     $rest_api_endpoints = array('login_status',
             'get_all_data',
@@ -90,3 +92,26 @@ Kódrészlet amit le ki kell egészíteni:
 
             'get_check_in'
     );
+
+### Az elejére el kell helyezni a cross origin engedélyezéséhez:
+
+    <? if (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER['HTTP_ORIGIN'] == 'https://bider01.github.io') {
+        header("Access-Control-Allow-Origin: https://bider01.github.io"); 
+        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+          if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+            header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+          if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+            header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+          exit(0);
+        }   
+        } ?>
+
+## Parancs a GitHub Page deploy előkészítéséhez:
+
+    ng build --output-path docs --base-href /ticket-reports/
+
+##A fooevents.phphoz hozzá kell adni
+
+		//RESTAPIHelperOwn
+        require_once($this->Config->classPath.'ownrestapihelper.php');
+        $this->RESTAPIHelperOwn = new FooEvents_REST_API_Helper_Own();

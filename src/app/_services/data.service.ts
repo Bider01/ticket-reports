@@ -20,4 +20,8 @@ export class DataService {
   updateStatus(ticketId: string, status: string) {
     return this.http.post<any>(`${environment.apiUrl}/update_ticket_status?param2=` + ticketId + `&param3=` + status, null);
   }
+
+  deleteTestTickets() {
+    return this.http.post<any>(`${environment.apiUrl}/delete_test_tickets`, null);
+  }
 }

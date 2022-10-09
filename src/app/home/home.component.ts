@@ -8,17 +8,18 @@ import {MatSort} from '@angular/material/sort';
 import {interval} from 'rxjs';
 import {WooComerceEvent} from '@app/_models/event';
 import {Ticket} from '@app/_models/ticket';
-import {element} from 'protractor';
+import * as XLSX from 'xlsx';
 
-@Component({templateUrl: 'home.component.html', styleUrls: ['home.component.css']})
+@Component({templateUrl: 'home.component.html', styleUrls: ['home.component.scss', 'mat-table-responsive/mat-table-responsive.directive.scss']})
 export class HomeComponent implements OnInit {
   displayedColumns: string[] = ['ticketId', 'name', 'status', 'time'];
-  ticketDisplayedColumns: string[] = ['ticketId', 'name', 'attendeeId', 'status', 'variation'];
+  ticketDisplayedColumns: string[] = ['ticketId', 'attendeeName', 'attendeeId', 'accompanist', 'status', 'variation'];
   dataSource: MatTableDataSource<CheckIn>;
   ticketDataSource: MatTableDataSource<Ticket>;
   search = '';
   search2 = '';
-
+  checkInMode = false;
+  adminMode = false;
   onlineOffline: boolean;
 
   @ViewChild('TableOnePaginator', {static: true}) tableOnePaginator: MatPaginator;
@@ -30,9 +31,12 @@ export class HomeComponent implements OnInit {
   checkIns: CheckIn[] = [];
   checkedIn: number;
   checkedIn5: number;
-  checkedInMFF: number;
-  ticketMFFSum: number;
-  lastCheck: number;
+  ticketCouponSum: number;
+  ticketSum1: number;
+  ticketSum2: number;
+  ticketSum3: number;
+  lastCheck = 0;
+  autoRefresh = false;
   event: WooComerceEvent;
 
   constructor(private dataService: DataService, private authenticationService: AuthenticationService) { }
@@ -41,9 +45,9 @@ export class HomeComponent implements OnInit {
     this.hardReload();
 
     interval(15 * 1000)
-      .subscribe(() => { this.loadData(); });
+      .subscribe(() => { if (this.autoRefresh) { this.loadData(); } });
     interval(60 * 60 * 1000)
-      .subscribe(() => { this.hardReload(); });
+      .subscribe(() => { if (this.autoRefresh) { this.hardReload(); } });
   }
 
   applyFilter() {
@@ -65,7 +69,7 @@ export class HomeComponent implements OnInit {
   }
 
   calculateLast5() {
-    const fromDate = new Date().getTime() / 1000 + 60 * 60 - 5 * 60;
+    const fromDate = new Date().getTime() / 1000 + 2 * 60 * 60 - 5 * 60;
 
     this.checkedIn5 = this.checkIns.filter( element => element.time > fromDate && element.status === 'Checked In' ).length;
     this.checkedIn5 -= this.checkIns.filter( element => element.time > fromDate && element.status !== 'Checked In' ).length;
@@ -79,14 +83,8 @@ export class HomeComponent implements OnInit {
 
     if (checkIn.status === 'Checked In') {
       this.checkedIn++;
-      if (checkIn.variation === 6996 || checkIn.variation === 6998) {
-        this.checkedInMFF++;
-      }
     } else if (ticket.WooCommerceEventsStatus === 'Checked In') {
       this.checkedIn--;
-      if (checkIn.variation === 6996 || checkIn.variation === 6998) {
-        this.checkedInMFF--;
-      }
     }
 
     ticket.WooCommerceEventsStatus = checkIn.status;
@@ -102,13 +100,14 @@ export class HomeComponent implements OnInit {
       }
       data.forEach(checkIn => {
         if (!this.checkIns.includes(checkIn)) {
+          checkIn.time = checkIn.time - 2 * 60 * 60;
           this.checkIns.push(checkIn);
           if (calculate) {
             this.calculate(checkIn);
           }
         }
       });
-      this.lastCheck = new Date().getTime() / 1000 + 60 * 60;
+      this.lastCheck = new Date().getTime() / 1000 + 2 * 60 * 60;
       this.dataSource = new MatTableDataSource(this.checkIns);
       this.dataSource.paginator = this.tableOnePaginator;
       this.dataSource.sort = this.tableOneSort;
@@ -116,22 +115,25 @@ export class HomeComponent implements OnInit {
       this.loading = false;
       this.onlineOffline = false;
       this.calculateLast5();
-    }, error => {
+    }, () => {
       this.onlineOffline = true;
     });
   }
 
   hardReload() {
     this.loading = true;
-    this.checkIns = [];
-    this.checkedIn = 0;
-    this.checkedIn5 = 0;
-    this.checkedInMFF = 0;
-    this.checkedInMFF = 0;
-    this.ticketMFFSum = 0;
-    this.lastCheck = 0;
 
     this.dataService.getAll().subscribe(data => {
+      // init
+      this.checkIns = [];
+      this.checkedIn = 0;
+      this.checkedIn5 = 0;
+      this.ticketCouponSum = 0;
+      this.ticketSum1 = 0;
+      this.ticketSum2 = 0;
+      this.ticketSum3 = 0;
+      this.lastCheck = 0;
+
       if (data.message === false) {
         this.authenticationService.logout();
         return;
@@ -141,13 +143,23 @@ export class HomeComponent implements OnInit {
       this.event.eventTickets.forEach(ticket => {
         if (ticket.WooCommerceEventsStatus === 'Checked In') {
           this.checkedIn++;
-          if (ticket.WooCommerceEventsVariationID === '6996' || ticket.WooCommerceEventsVariationID === '6998') {
-            this.checkedInMFF++;
-          }
         }
-        if (ticket.WooCommerceEventsVariationID === '6996' || ticket.WooCommerceEventsVariationID === '6998') {
-          this.ticketMFFSum++;
+        if (ticket.WooCommerceEventsVariationID === '11035' && ticket.coupon.includes('ceremony')) {
+          this.ticketCouponSum++;
         }
+
+        if (ticket.WooCommerceEventsVariationID === '11035') {
+          this.ticketSum1++;
+        } else if (ticket.WooCommerceEventsVariationID === '11025') {
+          this.ticketSum2++;
+        } else if (ticket.WooCommerceEventsVariationID === '11026') {
+          this.ticketSum3++;
+        }
+
+          ticket.attendeeId = ticket.WooCommerceEventsCustomAttendeeFields['Fényképes igazolvány szám/ID number'];
+        ticket.attendeeName = ticket.WooCommerceEventsCustomAttendeeFields['Név/Name'];
+        ticket.accompanist = ticket.WooCommerceEventsCustomAttendeeFields['Kísérő neve'];
+        ticket.WooCommerceEventsCustomAttendeeFields = null;
       });
       this.ticketDataSource = new MatTableDataSource(this.event.eventTickets);
       this.ticketDataSource.paginator = this.tableTwoPaginator;
@@ -155,14 +167,35 @@ export class HomeComponent implements OnInit {
       this.applyFilter2();
 
       this.loadData(false);
-    }, error => {
+    }, () => {
       this.onlineOffline = true;
     });
   }
 
   updateStatus(ticket: Ticket, status: string) {
-    this.dataService.updateStatus(ticket.WooCommerceEventsTicketID, status).subscribe(data => {
+    this.dataService.updateStatus(ticket.WooCommerceEventsTicketID, status).subscribe(() => {
       ticket.WooCommerceEventsStatus = status;
     });
+  }
+
+  deleteTestTickets() {
+    this.dataService.deleteTestTickets().subscribe(data => {
+      console.log('delete test tickets ' + data);
+      this.hardReload();
+    });
+  }
+
+  exportExcel() {
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.event.eventTickets);
+    const ws2: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.checkIns);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Tickets');
+    XLSX.utils.book_append_sheet(wb, ws2, 'Check In');
+
+    /* save to file */
+    XLSX.writeFile(wb, 'tickets_' + new Date().toLocaleTimeString() + '.xlsx');
+
   }
 }

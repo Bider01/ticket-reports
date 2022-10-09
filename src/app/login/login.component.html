@@ -1,6 +1,6 @@
 ﻿<div class="col-md-6 offset-md-3 mt-5">
     <div class="alert alert-info">
-        Adatokat kérd a kapu-tól vagy Bidló Balázs-tól!
+        Adatokat kérd Bidló Balázs-tól!
     </div>
     <div class="card">
         <h4 class="card-header">Karnevál statisztika</h4>
@@ -8,14 +8,14 @@
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label for="username">Felhasználó</label>
-                    <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                    <input type="text" id="username" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
                     <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                         <div *ngIf="f.username.errors.required">Username is required</div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="password">Jelszó</label>
-                    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <input type="password" id="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
                     <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                         <div *ngIf="f.password.errors.required">Password is required</div>
                     </div>
