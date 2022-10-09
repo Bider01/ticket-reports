@@ -1,12 +1,19 @@
-﻿export interface Ticket {
+﻿// noinspection NonAsciiCharacters
+
+export interface Ticket {
+  accompanist: string;
+  attendeeName: string;
+  attendeeId: string;
   WooCommerceEventsTicketID: string;
   WooCommerceEventsStatus: string;
   WooCommerceEventsVariationID: string;
+  WooCommerceEventsAttendeeName: string;
+  coupon: string;
   WooCommerceEventsCustomAttendeeFields: Attendee;
 }
 
 export interface Attendee {
-  ID: string;
+  'Fényképes igazolvány szám/ID number': string;
   'Név/Name': string;
-  'Kísért személy/Accompanied person (Kísérő meghívó esetén kötelező/Obligatory with Companion invitation)': string;
+  'Kísérő neve': string;
 }
