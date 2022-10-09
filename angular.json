@@ -130,5 +130,8 @@
       }
     }
   },
-  "defaultProject": "ticket-reports"
+  "defaultProject": "ticket-reports",
+  "cli": {
+    "analytics": false
+  }
 }
