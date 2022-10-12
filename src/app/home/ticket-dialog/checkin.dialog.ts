@@ -31,7 +31,7 @@ export class CheckinDialog implements AfterViewInit {
   ) {
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
-      map(ticket => (ticket ? this._filterTickets(ticket) : [] /*this.data.tickets.slice()*/)),
+      map(ticket => ((ticket && !this.codeReader) ? this._filterTickets(ticket) : [] /*this.data.tickets.slice()*/)),
     );
 
     this.myControl.valueChanges.subscribe(observable => {
@@ -48,8 +48,7 @@ export class CheckinDialog implements AfterViewInit {
 
   private _filterTickets(value: string): Ticket[] {
     const filterValue = value.toLowerCase();
-    const tickets = this.data.tickets.filter(ticket => ticket.WooCommerceEventsTicketID.toLowerCase().includes(filterValue) || ticket.attendeeName.toLowerCase().includes(filterValue));
-    return tickets.length == 1 && value == tickets[1].WooCommerceEventsTicketID ? [] : tickets;
+    return this.data.tickets.filter(ticket => ticket.WooCommerceEventsTicketID.toLowerCase().includes(filterValue) || ticket.attendeeName.toLowerCase().includes(filterValue));
   }
 
   checkIn(id: string) {
