@@ -24,4 +24,20 @@ export class DataService {
   deleteTestTickets() {
     return this.http.post<any>(`${environment.apiUrl}/delete_test_tickets`, null);
   }
+
+  updateTicket(ticketId: string, attendeeName: string, attendeeId: string, accompanist: string) {
+    return this.http.post<any>(`${environment.apiUrl}/update_ticket?id=` + ticketId + `&name=` + attendeeName + `&attendee-id=` + attendeeId + `&accompanist=` + accompanist, null);
+  }
+
+  resendTicket(ticketId: string) {
+    return this.http.post<any>(`${environment.apiUrl}/send_ticket?id=` + ticketId, null);
+  }
+
+  updateCoupon(ticketId: string, coupon: string) {
+    return this.http.post<any>(`${environment.apiUrl}/update_coupon?id=` + ticketId + `&coupon=` + coupon , null);
+  }
+
+  checkin(ticketId: string) {
+    return this.http.post<any>(`${environment.apiUrl}/checkin?id=` + ticketId, null);
+  }
 }

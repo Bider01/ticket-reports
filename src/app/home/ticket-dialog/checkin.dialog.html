@@ -1,0 +1,32 @@
+<style>
+  .full-width {
+    width: 100%;
+  }
+</style>
+
+<h1 mat-dialog-title>Beléptetés</h1>
+<div mat-dialog-content>
+  <form class="checkin-form">
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Meghívó</mat-label>
+      <input type="text"
+             placeholder="Meghívó azonosító vagy név"
+             aria-label="ticket-id"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto" #search>
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.WooCommerceEventsTicketID">
+          <span>{{option.WooCommerceEventsTicketID}}</span> |
+          <small>{{option.attendeeName}}</small>
+        </mat-option>
+      </mat-autocomplete>
+      <button *ngIf="myControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="myControl.setValue('')">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Bezárás</button>
+</div>
