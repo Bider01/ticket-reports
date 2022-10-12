@@ -36,8 +36,12 @@ export class EditDialog {
   }
 
   updateCoupon(add: boolean) {
-    this.dataService.updateCoupon(this.data.ticket.WooCommerceEventsTicketID, add ? "ceremony" : "").subscribe(() =>  {
-
+    this.dataService.updateCoupon(this.data.ticket.WooCommerceEventsTicketID, add).subscribe(() =>  {
+      if(add) {
+        this.data.ticket.coupon = 'ceremony';
+      } else {
+        this.data.ticket.coupon = '';
+      }
     });
   }
 

@@ -33,8 +33,8 @@ export class DataService {
     return this.http.post<any>(`${environment.apiUrl}/send_ticket?id=` + ticketId, null);
   }
 
-  updateCoupon(ticketId: string, coupon: string) {
-    return this.http.post<any>(`${environment.apiUrl}/update_coupon?id=` + ticketId + `&coupon=` + coupon , null);
+  updateCoupon(ticketId: string, add: boolean) {
+    return this.http.post<any>(`${environment.apiUrl}/update_coupon?id=` + ticketId + `&add=` + (add ? '1' : '0') , null);
   }
 
   checkin(ticketId: string) {

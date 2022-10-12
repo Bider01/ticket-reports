@@ -51,6 +51,34 @@
     
     }
 
+
+    function updateCoupon($ticketID, $add) {
+    
+        global $woocommerce;
+        global $wpdb;
+    
+        $table_name = $wpdb->prefix . 'wc_order_coupon_lookup';
+        $postmeta_table_name = $wpdb->prefix . 'postmeta';
+      $order_items_table_name = $wpdb->prefix . 'woocommerce_order_items';
+    
+        
+      
+      if($add == 1) {
+        $wpdb->get_results("INSERT INTO ".$table_name." (`order_id`, `coupon_id`, `date_created`, `discount_amount`) VALUES ((SELECT `meta_value` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsOrderID' AND `post_id` = (SELECT `post_id` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsTicketID' AND `meta_value` =  ".$ticketID.")), '11033', Now(), '0')");
+        $result = $wpdb->get_results("INSERT INTO ".$order_items_table_name." (`order_item_id`, `order_item_name`, `order_item_type`, `order_id`) VALUES (NULL, 'ceremony', 'coupon',((SELECT `meta_value` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsOrderID' AND `post_id` = (SELECT `post_id` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsTicketID' AND `meta_value` =  ".$ticketID.")))");
+      } else {
+        $wpdb->get_results("DELETE FROM ".$table_name." WHERE `coupon_id` = '11033' AND `order_id` = ((SELECT `meta_value` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsOrderID' AND `post_id` = (SELECT `post_id` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsTicketID' AND `meta_value` =  ".$ticketID.")))");
+        $result = $wpdb->get_results("DELETE FROM ".$order_items_table_name." WHERE `order_item_type` = 'coupon' AND `order_id` = ((SELECT `meta_value` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsOrderID' AND `post_id` = (SELECT `post_id` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsTicketID' AND `meta_value` =  ".$ticketID.")))");
+      }
+      
+       return "$result";
+    }
+
+
+    
+
+
+
 ## fooevents/classes/restapihelper.php
 
     public function fooevents_callback_get_check_in(WP_REST_Request $request) {
@@ -77,6 +105,33 @@
         exit();
     }
 
+    /**
+     * Update ticket coupon
+     */
+    public function fooevents_callback_update_coupon(WP_REST_Request $request) {
+        $authorize_result = $this->fooevents_is_authorized_user($request->get_headers());
+
+        if ( $authorize_result && is_object($authorize_result) && is_a($authorize_result, 'WP_User') ) {
+            error_reporting(0);
+            ini_set('display_errors', 0);
+
+            $ticketID        = $request->get_param("id");
+            $add             = $request->get_param("add");
+
+			if ( !empty($ticketID) ) {
+                $output['message'] = updateCoupon($ticketID, $add);
+            } else {
+                $output['message'] = 'All fields are required.';
+            }
+
+            echo json_encode($output);
+        } else {
+            echo json_encode($authorize_result);
+        }
+
+        exit();
+    }
+
 ### Kódrészlet amit le ki kell egészíteni:
 
     $rest_api_endpoints = array('login_status',
@@ -90,7 +145,9 @@
             'update_ticket_status_m',
             'update_ticket_status_multiday',
 
-            'get_check_in'
+            'get_check_in',
+			
+			      'update_coupon'
     );
 
 ### Az elejére el kell helyezni a cross origin engedélyezéséhez:
