@@ -13,8 +13,7 @@
              placeholder="Meghívó azonosító vagy név"
              aria-label="ticket-id"
              matInput
-             onfocus="codeReader ? blur() : ''"
-             inputmode="none"
+             [attr.inputmode]="codeReader ? 'none' : null"
              [formControl]="myControl"
              [matAutocomplete]="auto" #search>
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
