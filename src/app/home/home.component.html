@@ -66,6 +66,9 @@
       <mat-form-field appearance="standard">
         <mat-label>Keresés</mat-label>
         <input matInput (keyup)="applyFilter()" placeholder="Keresés" [(ngModel)]="search" #input>
+        <button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="search='';applyFilter();">
+          <mat-icon>close</mat-icon>
+        </button>
       </mat-form-field>
 
       <div class="mat-elevation-z8">
@@ -125,6 +128,9 @@
     <mat-form-field appearance="standard">
       <mat-label>Keresés</mat-label>
       <input matInput (keyup)="applyFilter2()" (ngModelChange)="variation.value = null" placeholder="Keresés" [(ngModel)]="search2" #input>
+      <button *ngIf="search2" matSuffix mat-icon-button aria-label="Clear" (click)="search2='';applyFilter2();">
+        <mat-icon>close</mat-icon>
+      </button>
     </mat-form-field>
 
     <div class="mat-elevation-z8">
