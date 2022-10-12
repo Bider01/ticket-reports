@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>Meghívó szerkesztése</h1>
+<div mat-dialog-content>
+  <p>Meghívó: #{{data.ticket.WooCommerceEventsTicketID}}</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Név</mat-label>
+    <input matInput [(ngModel)]="data.ticket.attendeeName">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>ID</mat-label>
+    <input matInput [(ngModel)]="data.ticket.attendeeId">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Kísérő</mat-label>
+    <input matInput [(ngModel)]="data.ticket.accompanist">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button color="primary" (click)="resendEmail()" [disabled]="resendClicked">Meghívó újraküldése</button>
+  <span *ngIf="data.ticket.WooCommerceEventsVariationID === '11035'">
+    <button mat-button color="accent" (click)="updateCoupon(true)" *ngIf="!data.ticket.coupon.includes('ceremony')">Műsor</button>
+    <button mat-button color="accent" (click)="updateCoupon(false)" *ngIf="data.ticket.coupon.includes('ceremony')">Műsor törlése</button>
+  </span>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Elvetés</button>
+  <button mat-button (click)="updateData()" [mat-dialog-close]="data.ticket" cdkFocusInitial>Mentés</button>
+</div>

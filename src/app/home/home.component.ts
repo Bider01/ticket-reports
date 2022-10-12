@@ -9,6 +9,9 @@ import {interval} from 'rxjs';
 import {WooComerceEvent} from '@app/_models/event';
 import {Ticket} from '@app/_models/ticket';
 import * as XLSX from 'xlsx';
+import {MatDialog} from '@angular/material/dialog';
+import {EditDialog} from '@app/home/edit-dialog/edit.dialog';
+import {CheckinDialog} from '@app/home/ticket-dialog/checkin.dialog';
 
 @Component({templateUrl: 'home.component.html', styleUrls: ['home.component.scss', 'mat-table-responsive/mat-table-responsive.directive.scss']})
 export class HomeComponent implements OnInit {
@@ -39,7 +42,7 @@ export class HomeComponent implements OnInit {
   autoRefresh = false;
   event: WooComerceEvent;
 
-  constructor(private dataService: DataService, private authenticationService: AuthenticationService) { }
+  constructor(private dataService: DataService, private authenticationService: AuthenticationService, public dialog: MatDialog) { }
 
   ngOnInit(): void  {
     this.hardReload();
@@ -197,5 +200,24 @@ export class HomeComponent implements OnInit {
     /* save to file */
     XLSX.writeFile(wb, 'tickets_' + new Date().toLocaleTimeString() + '.xlsx');
 
+  }
+
+  openEditDialog(ticket: Ticket) {
+    const dialogRef = this.dialog.open(EditDialog, {
+      width: '400px',
+      data: {ticket: ticket},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      ticket = result;
+    });
+  }
+
+  openCheckinDialog() {
+    this.dialog.open(CheckinDialog, {
+      width: '90%',
+      data: {tickets: this.ticketDataSource.data},
+    });
   }
 }

@@ -24,29 +24,37 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {EditDialog} from '@app/home/edit-dialog/edit.dialog';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatBadgeModule} from '@angular/material/badge';
+import {CheckinDialog} from '@app/home/ticket-dialog/checkin.dialog';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatPaginatorModule,
-        MatTableModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSortModule,
-        MatCardModule,
-        MatProgressBarModule,
-        MatIconModule,
-        MatButtonModule,
-        FormsModule,
-        MatCheckboxModule,
-        MatButtonToggleModule,
-        MatTableResponsiveModule,
-        MatSlideToggleModule
-    ],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSortModule,
+    MatCardModule,
+    MatProgressBarModule,
+    MatIconModule,
+    MatButtonModule,
+    FormsModule,
+    MatCheckboxModule,
+    MatButtonToggleModule,
+    MatTableResponsiveModule,
+    MatSlideToggleModule,
+    MatDialogModule,
+    MatBadgeModule,
+    MatAutocompleteModule
+  ],
   exports: [
     MatTableResponsiveModule
   ],
@@ -54,7 +62,9 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     AppComponent,
     HomeComponent,
     LoginComponent,
-    VariationPipe
+    VariationPipe,
+    EditDialog,
+    CheckinDialog
   ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

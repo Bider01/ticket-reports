@@ -51,6 +51,15 @@
       <p>{{checkedIn5}}</p>
     </mat-card-content>
   </mat-card>
+  <a (click)="openCheckinDialog()">
+  <mat-card class="check-in-stat" style="background-color: lightskyblue;">
+    <mat-card-title>Beléptetés</mat-card-title>
+    <mat-card-subtitle>Gyorsított beléptetés</mat-card-subtitle>
+    <mat-card-content>
+      <p><mat-icon aria-label="Beléptetés" style="font-size: 48px;width: 48px;height: 48px;">login</mat-icon></p>
+    </mat-card-content>
+  </mat-card>
+  </a>
   <mat-card class="check-in-stat">
     <mat-card-title>Letöltés</mat-card-title>
     <mat-card-subtitle>Adatok letöltése (xlsx)</mat-card-subtitle>
@@ -66,6 +75,9 @@
       <mat-form-field appearance="standard">
         <mat-label>Keresés</mat-label>
         <input matInput (keyup)="applyFilter()" placeholder="Keresés" [(ngModel)]="search" #input>
+        <button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="search='';applyFilter();">
+          <mat-icon>close</mat-icon>
+        </button>
       </mat-form-field>
 
       <div class="mat-elevation-z8">
@@ -125,6 +137,9 @@
     <mat-form-field appearance="standard">
       <mat-label>Keresés</mat-label>
       <input matInput (keyup)="applyFilter2()" (ngModelChange)="variation.value = null" placeholder="Keresés" [(ngModel)]="search2" #input>
+      <button *ngIf="search2" matSuffix mat-icon-button aria-label="Clear" (click)="search2='';applyFilter2();">
+        <mat-icon>close</mat-icon>
+      </button>
     </mat-form-field>
 
     <div class="mat-elevation-z8">
@@ -132,7 +147,11 @@
         <!-- ID Column -->
         <ng-container matColumnDef="ticketId">
           <th mat-header-cell *matHeaderCellDef mat-sort-header="WooCommerceEventsTicketID"> Mehívó id </th>
-          <td mat-cell *matCellDef="let row"> <a (click)="search = row.WooCommerceEventsTicketID; applyFilter();">#{{row.WooCommerceEventsTicketID}}</a> </td>
+          <td mat-cell *matCellDef="let row"> <a (click)="search = row.WooCommerceEventsTicketID; applyFilter();">#{{row.WooCommerceEventsTicketID}}</a>
+            <button mat-icon-button color="primary" aria-label="Edit" (click)="openEditDialog(row)" *ngIf="adminMode">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
         </ng-container>
 
         <!-- Name Column -->
