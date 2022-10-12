@@ -4,7 +4,7 @@ import {Ticket} from '@app/_models/ticket';
 import {DataService} from '@app/_services';
 import {FormControl} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {observable, Observable} from 'rxjs';
 
 export interface CheckinDialogData {
   tickets: Ticket[];
@@ -32,6 +32,13 @@ export class CheckinDialog implements AfterViewInit {
       startWith(''),
       map(ticket => (ticket ? this._filterTickets(ticket) : [] /*this.data.tickets.slice()*/)),
     );
+
+    this.myControl.valueChanges.subscribe(observable => {
+      if(observable.match(/^[0-9]{11}$/) != null) {
+        //this.checkIn(observable);
+        this.myControl.setValue('');
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -43,8 +50,7 @@ export class CheckinDialog implements AfterViewInit {
     return this.data.tickets.filter(ticket => ticket.WooCommerceEventsTicketID.toLowerCase().includes(filterValue) || ticket.attendeeName.toLowerCase().includes(filterValue));
   }
 
-  checkIn() {
-    var id = this.search;
+  checkIn(id: string) {
     this.dataService.checkin(id).subscribe(result => {
       this.selectedTicket = result;
       this.searchRef.nativeElement.focus();
