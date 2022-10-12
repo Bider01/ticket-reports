@@ -35,7 +35,7 @@ export class CheckinDialog implements AfterViewInit {
 
     this.myControl.valueChanges.subscribe(observable => {
       if(observable.match(/^[0-9]{11}$/) != null) {
-        //this.checkIn(observable);
+        this.checkIn(observable);
         this.myControl.setValue('');
       }
     });
@@ -51,10 +51,11 @@ export class CheckinDialog implements AfterViewInit {
   }
 
   checkIn(id: string) {
-    this.dataService.checkin(id).subscribe(result => {
+    this.selectedTicket = this.data.tickets.filter(ticket => ticket.WooCommerceEventsTicketID === id)[0];
+    /*this.dataService.checkin(id).subscribe(result => {
       this.selectedTicket = result;
       this.searchRef.nativeElement.focus();
-    });
+    });*/
   }
 
   onNoClick(): void {
