@@ -27,6 +27,12 @@
       </button>
     </mat-form-field>
   </form>
+  <div *ngIf="selectedTicket" style="text-align: center;">
+  Név: {{selectedTicket.attendeeName}}<br>
+  ID: {{selectedTicket.attendeeId}}<br>
+  Kísérő: {{selectedTicket.accompanist}}<br>
+  Státusz: {{selectedTicket.WooCommerceEventsStatus}}
+  </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Bezárás</button>
