@@ -20,6 +20,7 @@ export class CheckinDialog implements AfterViewInit {
   search: string;
   selectedTicket: Ticket;
   codeReader = true;
+  color = "white";
 
   @ViewChild('search') private searchRef: ElementRef;
 
@@ -47,11 +48,13 @@ export class CheckinDialog implements AfterViewInit {
 
   private _filterTickets(value: string): Ticket[] {
     const filterValue = value.toLowerCase();
-    return this.data.tickets.filter(ticket => ticket.WooCommerceEventsTicketID.toLowerCase().includes(filterValue) || ticket.attendeeName.toLowerCase().includes(filterValue));
+    const tickets = this.data.tickets.filter(ticket => ticket.WooCommerceEventsTicketID.toLowerCase().includes(filterValue) || ticket.attendeeName.toLowerCase().includes(filterValue));
+    return tickets.length == 1 && value == tickets[1].WooCommerceEventsTicketID ? [] : tickets;
   }
 
   checkIn(id: string) {
     this.selectedTicket = this.data.tickets.filter(ticket => ticket.WooCommerceEventsTicketID === id)[0];
+    this.color = this.selectedTicket.WooCommerceEventsStatus == "Not Checked In" ? "green" : "yellow";
     /*this.dataService.checkin(id).subscribe(result => {
       this.selectedTicket = result;
       this.searchRef.nativeElement.focus();
