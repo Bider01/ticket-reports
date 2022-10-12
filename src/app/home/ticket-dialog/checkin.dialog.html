@@ -13,6 +13,8 @@
              placeholder="Meghívó azonosító vagy név"
              aria-label="ticket-id"
              matInput
+             onfocus="codeReader ? blur() : ''"
+             inputmode="none"
              [formControl]="myControl"
              [matAutocomplete]="auto" #search>
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
@@ -29,4 +31,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Bezárás</button>
+  <mat-checkbox class="example-margin" [(ngModel)]="codeReader">Code reader</mat-checkbox>
 </div>

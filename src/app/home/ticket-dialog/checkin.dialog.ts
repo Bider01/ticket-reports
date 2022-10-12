@@ -19,6 +19,7 @@ export class CheckinDialog implements AfterViewInit {
   filteredOptions: Observable<Ticket[]>;
   search: string;
   selectedTicket: Ticket;
+  codeReader = true;
 
   @ViewChild('search') private searchRef: ElementRef;
 
