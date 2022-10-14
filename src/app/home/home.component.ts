@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
 
     interval(15 * 1000)
       .subscribe(() => { if (this.autoRefresh) { this.loadData(); } });
-    interval(60 * 60 * 1000)
+    interval(30 * 60 * 1000)
       .subscribe(() => { if (this.autoRefresh) { this.hardReload(); } });
   }
 

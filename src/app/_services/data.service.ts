@@ -25,10 +25,12 @@ export class DataService {
     return this.http.post<any>(`${environment.apiUrl}/delete_test_tickets`, null);
   }
 
+  //TODO
   updateTicket(ticketId: string, attendeeName: string, attendeeId: string, accompanist: string) {
     return this.http.post<any>(`${environment.apiUrl}/update_ticket?id=` + ticketId + `&name=` + attendeeName + `&attendee-id=` + attendeeId + `&accompanist=` + accompanist, null);
   }
 
+  //TODO
   resendTicket(ticketId: string) {
     return this.http.post<any>(`${environment.apiUrl}/send_ticket?id=` + ticketId, null);
   }

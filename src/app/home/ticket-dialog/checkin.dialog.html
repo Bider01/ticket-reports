@@ -27,14 +27,18 @@
       </button>
     </mat-form-field>
   </form>
-  <div *ngIf="selectedTicket" style="text-align: center;">
-  Név: {{selectedTicket.attendeeName}}<br>
-  ID: {{selectedTicket.attendeeId}}<br>
-  Kísérő: {{selectedTicket.accompanist}}<br>
-  Státusz: {{selectedTicket.WooCommerceEventsStatus}}
+  <div *ngIf="selectedTicket" style="text-align: center;line-height: 32px;font-size: 30px;">
+    Név: <b>{{selectedTicket.attendeeName}}</b><br>
+    ID: <b>{{selectedTicket.attendeeId}}</b><br>
+    Státusz: {{oldStatus}}->{{selectedTicket.WooCommerceEventsStatus}}<br>
+    Kísérő: {{selectedTicket.accompanist}}<br>
+    Meghívó ID: {{selectedTicket.WooCommerceEventsTicketID}}
   </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Bezárás</button>
-  <mat-checkbox class="example-margin" [(ngModel)]="codeReader">Code reader</mat-checkbox>
+  <button mat-raised-button color="accent" aria-label="Not Checked In" (click)="updateStatus('Not Checked In')" *ngIf="selectedTicket">
+    Cancel Check In <mat-icon>check_circle_outline</mat-icon>
+  </button>
+  <mat-checkbox class="example-margin" [(ngModel)]="codeReader" style="margin-left: 10px;margin-top: 10px;">Code reader</mat-checkbox>
 </div>

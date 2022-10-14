@@ -72,7 +72,51 @@
     }
     
      return "$result";
-  }
+    }
+
+/**
+* Update ticket ID with the provided status
+  * @param type $ticketID
+    */
+    function checkin($ticketID) {
+    $status = "Checked In";
+
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'fooevents_check_in';
+
+    $events_query = new WP_Query( array('post_type' => array('event_magic_tickets'), 'meta_query' => array( array( 'key' => 'WooCommerceEventsTicketID', 'value' => $ticketID ) )) );
+    $ticket = $events_query->get_posts();
+    $ticket = $ticket[0];
+
+    $eventID = get_post_meta($ticket->ID, 'WooCommerceEventsProductID', true);
+
+    $timestamp = current_time('timestamp');
+
+    $statusChanged = false;
+
+    $currentStatus = get_post_meta($ticket->ID, 'WooCommerceEventsStatus', true);
+    $result['oldStatus'] = $currentStatus;
+
+         if ( $currentStatus != $status ) {
+
+             $statusChanged = true;
+
+             update_post_meta( $ticket->ID, 'WooCommerceEventsStatus', strip_tags( $status ));
+
+         }
+
+      $wpdb->insert($table_name, array(
+                 'tid' => $ticket->ID,
+                 'eid' => $eventID,
+                 'day' => 1,
+                 'uid' => get_current_user_id(),
+                 'status' => $status,
+                 'checkin' => $timestamp
+             ));
+
+    $result['response'] = $statusChanged ? 'Status updated' : 'Status unchanged';
+    return $result;
+    }
 
 
     
@@ -132,6 +176,29 @@
         exit();
     }
 
+    /**
+* Update ticket status
+  */
+  public function fooevents_callback_checkin(WP_REST_Request $request) {
+  $authorize_result = $this->fooevents_is_authorized_user($request->get_headers());
+
+        if ( $authorize_result && is_object($authorize_result) && is_a($authorize_result, 'WP_User') ) {
+            error_reporting(0);
+            ini_set('display_errors', 0);
+
+            $ticketID           = $request->get_param("id");
+            $status             = $request->get_param("param3");
+
+            $output = checkin($ticketID);
+
+            echo json_encode($output);
+        } else {
+            echo json_encode($authorize_result);
+        }
+
+        exit();
+}
+
 ### Kódrészlet amit le ki kell egészíteni:
 
     $rest_api_endpoints = array('login_status',
@@ -147,7 +214,8 @@
 
             'get_check_in',
 			
-			      'update_coupon'
+			      'update_coupon',
+			      'checkin'
     );
 
 ### Az elejére el kell helyezni a cross origin engedélyezéséhez:

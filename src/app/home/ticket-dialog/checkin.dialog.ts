@@ -21,6 +21,7 @@ export class CheckinDialog implements AfterViewInit {
   selectedTicket: Ticket;
   codeReader = true;
   color = "white";
+  oldStatus : string;
 
   @ViewChild('search') private searchRef: ElementRef;
 
@@ -53,11 +54,25 @@ export class CheckinDialog implements AfterViewInit {
 
   checkIn(id: string) {
     this.selectedTicket = this.data.tickets.filter(ticket => ticket.WooCommerceEventsTicketID === id)[0];
-    this.color = this.selectedTicket.WooCommerceEventsStatus == "Not Checked In" ? "green" : "yellow";
-    /*this.dataService.checkin(id).subscribe(result => {
-      this.selectedTicket = result;
+    this.color = this.selectedTicket.WooCommerceEventsStatus == "Not Checked In" ? "white" : "yellow";
+    this.oldStatus = "?";
+      this.dataService.checkin(id).subscribe(result => {
+      this.oldStatus = result.oldStatus;
+
+      if(result.response == "Status updated" && result.oldStatus == "Not Checked In") {
+        this.color = "lawngreen";
+        this.selectedTicket.WooCommerceEventsStatus = "Checked In";
+      } else {
+        this.color = "red";
+      }
       this.searchRef.nativeElement.focus();
-    });*/
+    });
+  }
+
+  updateStatus(status: string) {
+    this.dataService.updateStatus(this.selectedTicket.WooCommerceEventsTicketID, status).subscribe(result => {
+      this.selectedTicket.WooCommerceEventsStatus = status;
+    });
   }
 
   onNoClick(): void {
