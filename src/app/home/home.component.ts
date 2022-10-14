@@ -216,7 +216,7 @@ export class HomeComponent implements OnInit {
 
   openCheckinDialog() {
     this.dialog.open(CheckinDialog, {
-      width: '90%',
+      width: '100%',
       maxWidth: '800px',
       data: {tickets: this.ticketDataSource.data},
     });
