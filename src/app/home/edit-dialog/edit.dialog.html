@@ -15,7 +15,7 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button color="primary" (click)="resendEmail()" [disabled]="resendClicked">Meghívó újraküldése</button>
+  <button mat-button color="primary" (click)="resendEmail()" [disabled]="resendClicked" disabled="true">Meghívó újraküldése</button>
   <span *ngIf="data.ticket.WooCommerceEventsVariationID === '11035'">
     <button mat-button color="accent" (click)="updateCoupon(true)" *ngIf="!data.ticket.coupon.includes('ceremony')">Műsor</button>
     <button mat-button color="accent" (click)="updateCoupon(false)" *ngIf="data.ticket.coupon.includes('ceremony')">Műsor törlése</button>
@@ -23,5 +23,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Elvetés</button>
-  <button mat-button (click)="updateData()" [mat-dialog-close]="data.ticket" cdkFocusInitial>Mentés</button>
+  <button mat-button (click)="updateData()" [mat-dialog-close]="data.ticket" cdkFocusInitial disabled="true">Mentés</button>
 </div>

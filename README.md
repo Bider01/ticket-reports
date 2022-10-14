@@ -52,27 +52,27 @@
     }
 
 
-    function updateCoupon($ticketID, $add) {
-    
-        global $woocommerce;
-        global $wpdb;
-    
-        $table_name = $wpdb->prefix . 'wc_order_coupon_lookup';
-        $postmeta_table_name = $wpdb->prefix . 'postmeta';
-      $order_items_table_name = $wpdb->prefix . 'woocommerce_order_items';
-    
-        
+      function updateCoupon($ticketID, $add) {
+  
+      global $woocommerce;
+      global $wpdb;
+  
+      $table_name = $wpdb->prefix . 'wc_order_coupon_lookup';
+      $postmeta_table_name = $wpdb->prefix . 'postmeta';
+    $order_items_table_name = $wpdb->prefix . 'woocommerce_order_items';
+  
       
-      if($add == 1) {
-        $wpdb->get_results("INSERT INTO ".$table_name." (`order_id`, `coupon_id`, `date_created`, `discount_amount`) VALUES ((SELECT `meta_value` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsOrderID' AND `post_id` = (SELECT `post_id` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsTicketID' AND `meta_value` =  ".$ticketID.")), '11033', Now(), '0')");
-        $result = $wpdb->get_results("INSERT INTO ".$order_items_table_name." (`order_item_id`, `order_item_name`, `order_item_type`, `order_id`) VALUES (NULL, 'ceremony', 'coupon',((SELECT `meta_value` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsOrderID' AND `post_id` = (SELECT `post_id` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsTicketID' AND `meta_value` =  ".$ticketID.")))");
-      } else {
-        $wpdb->get_results("DELETE FROM ".$table_name." WHERE `coupon_id` = '11033' AND `order_id` = ((SELECT `meta_value` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsOrderID' AND `post_id` = (SELECT `post_id` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsTicketID' AND `meta_value` =  ".$ticketID.")))");
-        $result = $wpdb->get_results("DELETE FROM ".$order_items_table_name." WHERE `order_item_type` = 'coupon' AND `order_id` = ((SELECT `meta_value` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsOrderID' AND `post_id` = (SELECT `post_id` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsTicketID' AND `meta_value` =  ".$ticketID.")))");
-      }
-      
-       return "$result";
+    
+    if($add == 1) {
+      $wpdb->get_results("INSERT INTO ".$table_name." (`order_id`, `coupon_id`, `date_created`, `discount_amount`) VALUES ((SELECT `meta_value` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsOrderID' AND `post_id` = (SELECT `post_id` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsTicketID' AND `meta_value` =  ".$ticketID.")), '11033', Now(), '0')");
+      $result = $wpdb->get_results("INSERT INTO ".$order_items_table_name." (`order_item_id`, `order_item_name`, `order_item_type`, `order_id`) VALUES (NULL, 'ceremony', 'coupon',(SELECT `meta_value` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsOrderID' AND `post_id` = (SELECT `post_id` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsTicketID' AND `meta_value` =  ".$ticketID.")))");
+    } else {
+      $wpdb->get_results("DELETE FROM ".$table_name." WHERE `coupon_id` = '11033' AND `order_id` = ((SELECT `meta_value` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsOrderID' AND `post_id` = (SELECT `post_id` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsTicketID' AND `meta_value` =  ".$ticketID.")))");
+      $result = $wpdb->get_results("DELETE FROM ".$order_items_table_name." WHERE `order_item_type` = 'coupon' AND `order_id` = (SELECT `meta_value` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsOrderID' AND `post_id` = (SELECT `post_id` FROM ".$postmeta_table_name." WHERE `meta_key` = 'WooCommerceEventsTicketID' AND `meta_value` =  ".$ticketID."))");
     }
+    
+     return "$result";
+  }
 
 
     
