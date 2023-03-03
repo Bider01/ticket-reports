@@ -31,7 +31,7 @@
     Név: <b>{{selectedTicket.attendeeName}}</b><br>
     ID: <b>{{selectedTicket.attendeeId}}</b><br>
     Státusz: {{oldStatus}} -> {{selectedTicket.WooCommerceEventsStatus}}<br>
-    {{ selectedTicket.WooCommerceEventsVariationID | variationPipe }} {{selectedTicket.WooCommerceEventsVariationID == '11035' && selectedTicket.coupon.includes('ceremony') ? '+ műsor' : ''}} <br>
+    {{ selectedTicket.WooCommerceEventsVariationID | variationPipe }}<br>
     Kísérő: {{selectedTicket.accompanist}}<br>
     Meghívó ID: {{selectedTicket.WooCommerceEventsTicketID}}
   </div>

@@ -8,31 +8,31 @@
 <p *ngIf="lastCheck == 0">betöltés...</p>
 <div class="card-container" *ngIf="lastCheck != 0">
   <mat-card class="check-in-stat">
-    <mat-card-title>Gólya/instruktor</mat-card-title>
-    <mat-card-subtitle>összes (műsorral együtt)</mat-card-subtitle>
+    <mat-card-title>SE polgár</mat-card-title>
+    <mat-card-subtitle>normál </mat-card-subtitle>
     <mat-card-content>
       <p>{{ticketSum1}}</p>
     </mat-card-content>
   </mat-card>
   <mat-card class="check-in-stat">
     <mat-card-title>SE polgár</mat-card-title>
-    <mat-card-subtitle>összes</mat-card-subtitle>
+    <mat-card-subtitle>MFF</mat-card-subtitle>
     <mat-card-content>
       <p>{{ticketSum2}}</p>
     </mat-card-content>
   </mat-card>
   <mat-card class="check-in-stat">
     <mat-card-title>Kísérő</mat-card-title>
-    <mat-card-subtitle>összes</mat-card-subtitle>
+    <mat-card-subtitle>normál</mat-card-subtitle>
     <mat-card-content>
       <p>{{ticketSum3}}</p>
     </mat-card-content>
   </mat-card>
   <mat-card class="check-in-stat">
-    <mat-card-title>Ceremony</mat-card-title>
-    <mat-card-subtitle>összes</mat-card-subtitle>
+    <mat-card-title>Kísérő</mat-card-title>
+    <mat-card-subtitle>MFF</mat-card-subtitle>
     <mat-card-content>
-      <p>{{ticketCouponSum}}</p>
+      <p>{{ticketSum4}}</p>
     </mat-card-content>
   </mat-card>
 </div>
@@ -128,9 +128,10 @@
     <p>
       Keresés típusra:
       <mat-button-toggle-group #variation="matButtonToggleGroup">
-        <mat-button-toggle (click)="search2 = '11035'; applyFilter2();">Gólya/instruktor</mat-button-toggle>
-        <mat-button-toggle (click)="search2 = '11025'; applyFilter2();">SE polgár</mat-button-toggle>
-        <mat-button-toggle (click)="search2 = '11026'; applyFilter2();">Kísérő</mat-button-toggle>
+        <mat-button-toggle (click)="search2 = '12586'; applyFilter2();">SE polgár</mat-button-toggle>
+        <mat-button-toggle (click)="search2 = '12587'; applyFilter2();">SE polgár - MFF</mat-button-toggle>
+        <mat-button-toggle (click)="search2 = '12588'; applyFilter2();">Kísérő</mat-button-toggle>
+        <mat-button-toggle (click)="search2 = '12589'; applyFilter2();">Kísérő - MFF</mat-button-toggle>
       </mat-button-toggle-group>
     </p>
     <mat-form-field appearance="standard">
