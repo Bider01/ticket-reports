@@ -33,6 +33,7 @@ export class AuthenticationService {
                 const user: User = new User(username, password);
                 localStorage.setItem('username', username);
                 localStorage.setItem('password', password);
+                localStorage.setItem('admin', data.admin);
                 this.userSubject.next(user);
                 return data;
               } else {

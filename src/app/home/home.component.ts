@@ -21,8 +21,8 @@ export class HomeComponent implements OnInit {
   ticketDataSource: MatTableDataSource<Ticket>;
   search = '';
   search2 = '';
-  checkInMode = false;
-  adminMode = false;
+  editMode = false;
+  adminMode =  localStorage.getItem('admin');
   onlineOffline: boolean;
 
   @ViewChild('TableOnePaginator', {static: true}) tableOnePaginator: MatPaginator;
