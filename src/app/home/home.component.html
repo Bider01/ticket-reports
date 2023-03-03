@@ -8,31 +8,31 @@
 <p *ngIf="lastCheck == 0">betöltés...</p>
 <div class="card-container" *ngIf="lastCheck != 0">
   <mat-card class="check-in-stat">
-    <mat-card-title>Gólya/instruktor</mat-card-title>
-    <mat-card-subtitle>összes (műsorral együtt)</mat-card-subtitle>
+    <mat-card-title>SE polgár</mat-card-title>
+    <mat-card-subtitle>normál </mat-card-subtitle>
     <mat-card-content>
       <p>{{ticketSum1}}</p>
     </mat-card-content>
   </mat-card>
   <mat-card class="check-in-stat">
     <mat-card-title>SE polgár</mat-card-title>
-    <mat-card-subtitle>összes</mat-card-subtitle>
+    <mat-card-subtitle>MFF</mat-card-subtitle>
     <mat-card-content>
       <p>{{ticketSum2}}</p>
     </mat-card-content>
   </mat-card>
   <mat-card class="check-in-stat">
     <mat-card-title>Kísérő</mat-card-title>
-    <mat-card-subtitle>összes</mat-card-subtitle>
+    <mat-card-subtitle>normál</mat-card-subtitle>
     <mat-card-content>
       <p>{{ticketSum3}}</p>
     </mat-card-content>
   </mat-card>
   <mat-card class="check-in-stat">
-    <mat-card-title>Ceremony</mat-card-title>
-    <mat-card-subtitle>összes</mat-card-subtitle>
+    <mat-card-title>Kísérő</mat-card-title>
+    <mat-card-subtitle>MFF</mat-card-subtitle>
     <mat-card-content>
-      <p>{{ticketCouponSum}}</p>
+      <p>{{ticketSum4}}</p>
     </mat-card-content>
   </mat-card>
 </div>
@@ -123,15 +123,15 @@
   <h4 class="card-header">Meghívók</h4>
   <div class="card-body">
     <section class="example-section">
-      <mat-checkbox class="example-margin" [(ngModel)]="checkInMode">Kapu</mat-checkbox>
-      <mat-checkbox class="example-margin" [(ngModel)]="adminMode">Admin</mat-checkbox>
+      <mat-checkbox class="example-margin" [(ngModel)]="editMode">Módosítás</mat-checkbox>
     </section>
     <p>
       Keresés típusra:
       <mat-button-toggle-group #variation="matButtonToggleGroup">
-        <mat-button-toggle (click)="search2 = '11035'; applyFilter2();">Gólya/instruktor</mat-button-toggle>
-        <mat-button-toggle (click)="search2 = '11025'; applyFilter2();">SE polgár</mat-button-toggle>
-        <mat-button-toggle (click)="search2 = '11026'; applyFilter2();">Kísérő</mat-button-toggle>
+        <mat-button-toggle (click)="search2 = '12586'; applyFilter2();">SE polgár</mat-button-toggle>
+        <mat-button-toggle (click)="search2 = '12587'; applyFilter2();">SE polgár - MFF</mat-button-toggle>
+        <mat-button-toggle (click)="search2 = '12588'; applyFilter2();">Kísérő</mat-button-toggle>
+        <mat-button-toggle (click)="search2 = '12589'; applyFilter2();">Kísérő - MFF</mat-button-toggle>
       </mat-button-toggle-group>
     </p>
     <mat-form-field appearance="standard">
@@ -148,7 +148,7 @@
         <ng-container matColumnDef="ticketId">
           <th mat-header-cell *matHeaderCellDef mat-sort-header="WooCommerceEventsTicketID"> Mehívó id </th>
           <td mat-cell *matCellDef="let row"> <a (click)="search = row.WooCommerceEventsTicketID; applyFilter();">#{{row.WooCommerceEventsTicketID}}</a>
-            <button mat-icon-button color="primary" aria-label="Edit" (click)="openEditDialog(row)" *ngIf="adminMode">
+            <button mat-icon-button color="primary" aria-label="Edit" (click)="openEditDialog(row)" *ngIf="editMode && adminMode">
               <mat-icon>edit</mat-icon>
             </button>
           </td>
@@ -176,16 +176,16 @@
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef mat-sort-header="WooCommerceEventsStatus"> Státusz </th>
           <td mat-cell *matCellDef="let row" [ngClass]="{'not-normal' : row.WooCommerceEventsStatus != 'Checked In' && row.WooCommerceEventsStatus != 'Not Checked In'}"> {{row.WooCommerceEventsStatus}}
-            <button mat-icon-button color="accent" aria-label="Unpaid" (click)="updateStatus(row, 'Unpaid')" *ngIf="adminMode">
+            <button mat-icon-button color="accent" aria-label="Unpaid" (click)="updateStatus(row, 'Unpaid')" *ngIf="editMode && adminMode">
               <mat-icon>money_off</mat-icon>
             </button>
-            <button mat-icon-button color="accent" aria-label="Canceled" (click)="updateStatus(row, 'Canceled')" *ngIf="adminMode">
+            <button mat-icon-button color="accent" aria-label="Canceled" (click)="updateStatus(row, 'Canceled')" *ngIf="editMode && adminMode">
               <mat-icon>close</mat-icon>
             </button>
-            <button mat-icon-button color="primary" aria-label="Checked In" (click)="updateStatus(row, 'Checked In')" *ngIf="checkInMode || adminMode">
+            <button mat-icon-button color="primary" aria-label="Checked In" (click)="updateStatus(row, 'Checked In')" *ngIf="editMode">
               <mat-icon>check_circle</mat-icon>
             </button>
-            <button mat-icon-button color="primary" aria-label="Not Checked In" (click)="updateStatus(row, 'Not Checked In')" *ngIf="adminMode">
+            <button mat-icon-button color="primary" aria-label="Not Checked In" (click)="updateStatus(row, 'Not Checked In')" *ngIf="editMode && adminMode">
               <mat-icon>check_circle_outline</mat-icon>
             </button>
           </td>

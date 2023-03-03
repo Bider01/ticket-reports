@@ -21,8 +21,8 @@ export class HomeComponent implements OnInit {
   ticketDataSource: MatTableDataSource<Ticket>;
   search = '';
   search2 = '';
-  checkInMode = false;
-  adminMode = false;
+  editMode = false;
+  adminMode =  localStorage.getItem('admin');
   onlineOffline: boolean;
 
   @ViewChild('TableOnePaginator', {static: true}) tableOnePaginator: MatPaginator;
@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit {
   ticketSum1: number;
   ticketSum2: number;
   ticketSum3: number;
+  ticketSum4: number;
   lastCheck = 0;
   autoRefresh = false;
   event: WooComerceEvent;
@@ -135,6 +136,7 @@ export class HomeComponent implements OnInit {
       this.ticketSum1 = 0;
       this.ticketSum2 = 0;
       this.ticketSum3 = 0;
+      this.ticketSum4 = 0;
       this.lastCheck = 0;
 
       if (data.message === false) {
@@ -147,16 +149,15 @@ export class HomeComponent implements OnInit {
         if (ticket.WooCommerceEventsStatus === 'Checked In') {
           this.checkedIn++;
         }
-        if (ticket.WooCommerceEventsVariationID === '11035' && ticket.coupon.includes('ceremony')) {
-          this.ticketCouponSum++;
-        }
 
-        if (ticket.WooCommerceEventsVariationID === '11035') {
+        if (ticket.WooCommerceEventsVariationID === '12586') {
           this.ticketSum1++;
-        } else if (ticket.WooCommerceEventsVariationID === '11025') {
+        } else if (ticket.WooCommerceEventsVariationID === '12587') {
           this.ticketSum2++;
-        } else if (ticket.WooCommerceEventsVariationID === '11026') {
+        } else if (ticket.WooCommerceEventsVariationID === '12588') {
           this.ticketSum3++;
+        } else if (ticket.WooCommerceEventsVariationID === '12589') {
+          this.ticketSum4++;
         }
 
           ticket.attendeeId = ticket.WooCommerceEventsCustomAttendeeFields['Fényképes igazolvány szám/ID number'];
