@@ -16,10 +16,6 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button color="primary" (click)="resendEmail()" [disabled]="resendClicked" disabled="true">Meghívó újraküldése</button>
-  <span *ngIf="data.ticket.WooCommerceEventsVariationID === '11035'">
-    <button mat-button color="accent" (click)="updateCoupon(true)" *ngIf="!data.ticket.coupon.includes('ceremony')">Műsor</button>
-    <button mat-button color="accent" (click)="updateCoupon(false)" *ngIf="data.ticket.coupon.includes('ceremony')">Műsor törlése</button>
-  </span>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Elvetés</button>

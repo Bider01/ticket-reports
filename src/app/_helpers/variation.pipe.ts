@@ -4,12 +4,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class VariationPipe implements PipeTransform {
   transform(value: string): string {
     switch (value) {
-      case '11035':
-        return 'Gólya/instruktor';
-      case '11025':
+      case '12586':
         return 'SE polgár';
-      case '11026':
+      case '12587':
+        return 'SE polgár - MFF';
+      case '12588':
         return 'Kísérő';
+      case '12589':
+        return 'Kísérő - MFF';
     }
     return 'N/A';
   }
