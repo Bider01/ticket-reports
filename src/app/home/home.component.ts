@@ -150,14 +150,14 @@ export class HomeComponent implements OnInit {
           this.checkedIn++;
         }
 
-        if (ticket.WooCommerceEventsVariationID === '12586') {
+        if (ticket.WooCommerceEventsVariationID === '15653') {
           this.ticketSum1++;
-        } else if (ticket.WooCommerceEventsVariationID === '12587') {
+        } else if (ticket.WooCommerceEventsVariationID === '15654') {
           this.ticketSum2++;
-        } else if (ticket.WooCommerceEventsVariationID === '12588') {
+        } else if (ticket.WooCommerceEventsVariationID === '15655') {
           this.ticketSum3++;
-        } else if (ticket.WooCommerceEventsVariationID === '12589') {
-          this.ticketSum4++;
+        // } else if (ticket.WooCommerceEventsVariationID === '12589') {
+        //   this.ticketSum4++;
         }
 
           ticket.attendeeId = ticket.WooCommerceEventsCustomAttendeeFields['Fényképes igazolvány szám/ID number'];
