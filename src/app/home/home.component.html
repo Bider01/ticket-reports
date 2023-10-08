@@ -8,33 +8,33 @@
 <p *ngIf="lastCheck == 0">betöltés...</p>
 <div class="card-container" *ngIf="lastCheck != 0">
   <mat-card class="check-in-stat">
-    <mat-card-title>SE polgár</mat-card-title>
-    <mat-card-subtitle>normál </mat-card-subtitle>
+    <mat-card-title>Gólya</mat-card-title>
+    <mat-card-subtitle>vagy instruktor </mat-card-subtitle>
     <mat-card-content>
       <p>{{ticketSum1}}</p>
     </mat-card-content>
   </mat-card>
   <mat-card class="check-in-stat">
     <mat-card-title>SE polgár</mat-card-title>
-    <mat-card-subtitle>MFF</mat-card-subtitle>
+<!--    <mat-card-subtitle>MFF</mat-card-subtitle>-->
     <mat-card-content>
       <p>{{ticketSum2}}</p>
     </mat-card-content>
   </mat-card>
   <mat-card class="check-in-stat">
     <mat-card-title>Kísérő</mat-card-title>
-    <mat-card-subtitle>normál</mat-card-subtitle>
+<!--    <mat-card-subtitle>normál</mat-card-subtitle>-->
     <mat-card-content>
       <p>{{ticketSum3}}</p>
     </mat-card-content>
   </mat-card>
-  <mat-card class="check-in-stat">
-    <mat-card-title>Kísérő</mat-card-title>
-    <mat-card-subtitle>MFF</mat-card-subtitle>
-    <mat-card-content>
-      <p>{{ticketSum4}}</p>
-    </mat-card-content>
-  </mat-card>
+<!--  <mat-card class="check-in-stat">-->
+<!--    <mat-card-title>Kísérő</mat-card-title>-->
+<!--    <mat-card-subtitle>MFF</mat-card-subtitle>-->
+<!--    <mat-card-content>-->
+<!--      <p>{{ticketSum4}}</p>-->
+<!--    </mat-card-content>-->
+<!--  </mat-card>-->
 </div>
 <div class="card-container" *ngIf="lastCheck != 0">
   <mat-card class="check-in-stat">
@@ -128,10 +128,10 @@
     <p>
       Keresés típusra:
       <mat-button-toggle-group #variation="matButtonToggleGroup">
-        <mat-button-toggle (click)="search2 = '12586'; applyFilter2();">SE polgár</mat-button-toggle>
-        <mat-button-toggle (click)="search2 = '12587'; applyFilter2();">SE polgár - MFF</mat-button-toggle>
-        <mat-button-toggle (click)="search2 = '12588'; applyFilter2();">Kísérő</mat-button-toggle>
-        <mat-button-toggle (click)="search2 = '12589'; applyFilter2();">Kísérő - MFF</mat-button-toggle>
+        <mat-button-toggle (click)="search2 = '15653'; applyFilter2();">Gólya</mat-button-toggle>
+        <mat-button-toggle (click)="search2 = '15654'; applyFilter2();">SE polgár</mat-button-toggle>
+        <mat-button-toggle (click)="search2 = '15655'; applyFilter2();">Kísérő</mat-button-toggle>
+<!--        <mat-button-toggle (click)="search2 = '12589'; applyFilter2();">Kísérő - MFF</mat-button-toggle>-->
       </mat-button-toggle-group>
     </p>
     <mat-form-field appearance="standard">
@@ -148,9 +148,9 @@
         <ng-container matColumnDef="ticketId">
           <th mat-header-cell *matHeaderCellDef mat-sort-header="WooCommerceEventsTicketID"> Mehívó id </th>
           <td mat-cell *matCellDef="let row"> <a (click)="search = row.WooCommerceEventsTicketID; applyFilter();">#{{row.WooCommerceEventsTicketID}}</a>
-            <button mat-icon-button color="primary" aria-label="Edit" (click)="openEditDialog(row)" *ngIf="editMode && adminMode">
-              <mat-icon>edit</mat-icon>
-            </button>
+<!--            <button mat-icon-button color="primary" aria-label="Edit" (click)="openEditDialog(row)" *ngIf="editMode && adminMode">-->
+<!--              <mat-icon>edit</mat-icon>-->
+<!--            </button>-->
           </td>
         </ng-container>
 
