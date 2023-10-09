@@ -67,6 +67,16 @@
       <p><a (click)="exportExcel()"><mat-icon aria-label="Letöltés" style="font-size: 48px;width: 48px;height: 48px;">get_app</mat-icon></a></p>
     </mat-card-content>
   </mat-card>
+  <mat-card class="check-in-stat" style="background-color: lightskyblue;">
+    <mat-card-title>Esemény</mat-card-title>
+    <mat-card-subtitle>Vásárlás jelszó</mat-card-subtitle>
+    <mat-card-content>
+      <p>
+        <input matInput placeholder="Jelszó" [(ngModel)]="pass"  #input>
+        <button mat-raised-button (click)="modifyEventPass()">Beállít</button>
+      </p>
+    </mat-card-content>
+  </mat-card>
 </div>
 <div class="card mt-4">
     <h4 class="card-header">Belépések</h4>

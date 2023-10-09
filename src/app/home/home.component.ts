@@ -24,6 +24,10 @@ export class HomeComponent implements OnInit {
   editMode = false;
   adminMode =  localStorage.getItem('admin');
   onlineOffline: boolean;
+  pass = "";
+
+
+  eventId = "15652";
 
   @ViewChild('TableOnePaginator', {static: true}) tableOnePaginator: MatPaginator;
   @ViewChild('TableOneSort', {static: true}) tableOneSort: MatSort;
@@ -220,6 +224,12 @@ export class HomeComponent implements OnInit {
       width: '100%',
       maxWidth: '800px',
       data: {tickets: this.ticketDataSource.data},
+    });
+  }
+
+  modifyEventPass() {
+    this.dataService.modifyEventPass(this.eventId, this.pass).subscribe(data => {
+      console.log('modified event pass ' + data);
     });
   }
 }
