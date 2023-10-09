@@ -42,4 +42,8 @@ export class DataService {
   checkin(ticketId: string) {
     return this.http.post<any>(`${environment.apiUrl}/checkin?id=` + ticketId, null);
   }
+
+  modifyEventPass(event: string, pass: string) {
+    return this.http.post<any>(`${environment.apiUrl}/event_visibility?event=` + event + `&pass=` + pass, null);
+  }
 }
