@@ -1,4 +1,4 @@
-﻿import {NgModule} from '@angular/core';
+﻿import {NgModule, APP_INITIALIZER} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -29,6 +29,11 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatBadgeModule} from '@angular/material/badge';
 import {CheckinDialog} from '@app/home/ticket-dialog/checkin.dialog';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {AppConfigService} from "@app/app-config.service";
+
+export function loadAppConfig(configService: AppConfigService) {
+  return () => configService.loadConfig();
+}
 
 @NgModule({
   imports: [
@@ -67,6 +72,12 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     CheckinDialog
   ],
     providers: [
+        {
+          provide: APP_INITIALIZER,
+          useFactory: loadAppConfig,
+          deps: [AppConfigService],
+          multi: true
+        },
         { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
     ],

@@ -6,35 +6,17 @@
   <button mat-icon-button color="primary" aria-label="Refresh" (click)="hardReload()" class="refresh">
   <mat-icon>autorenew</mat-icon></button></p>
 <p *ngIf="lastCheck == 0">betöltés...</p>
+<h3>Rendezvény: {{this.event.WooCommerceEventsName}}</h3>
 <div class="card-container" *ngIf="lastCheck != 0">
-  <mat-card class="check-in-stat">
-    <mat-card-title>SE polgár</mat-card-title>
-    <mat-card-subtitle>normál</mat-card-subtitle>
-    <mat-card-content>
-      <p>{{ticketSum1}}</p>
-    </mat-card-content>
-  </mat-card>
-  <mat-card class="check-in-stat">
-    <mat-card-title>SE polgár</mat-card-title>
-    <mat-card-subtitle>MFF</mat-card-subtitle>
-    <mat-card-content>
-      <p>{{ticketSum2}}</p>
-    </mat-card-content>
-  </mat-card>
-  <mat-card class="check-in-stat">
-    <mat-card-title>Kísérő</mat-card-title>
-    <mat-card-subtitle>normál</mat-card-subtitle>
-    <mat-card-content>
-      <p>{{ticketSum3}}</p>
-    </mat-card-content>
-  </mat-card>
-  <mat-card class="check-in-stat">
-    <mat-card-title>Kísérő</mat-card-title>
-    <mat-card-subtitle>MFF</mat-card-subtitle>
-    <mat-card-content>
-      <p>{{ticketSum4}}</p>
-    </mat-card-content>
-  </mat-card>
+  <ng-container *ngFor="let variationId of objectKeys(ticketStatistics)">
+    <mat-card class="check-in-stat">
+      <mat-card-title>{{ configService.getVariation(variationId) }}</mat-card-title>
+      <mat-card-subtitle>{{ variationId }}</mat-card-subtitle>
+      <mat-card-content>
+        <p>{{ ticketStatistics[variationId] }}</p>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
 </div>
 <div class="card-container" *ngIf="lastCheck != 0">
   <mat-card class="check-in-stat">
@@ -138,10 +120,11 @@
     <p>
       Keresés típusra:
       <mat-button-toggle-group #variation="matButtonToggleGroup">
-        <mat-button-toggle (click)="search2 = '17738'; applyFilter2();">SE polgár</mat-button-toggle>
-        <mat-button-toggle (click)="search2 = '17739'; applyFilter2();">SE polgár - MFF</mat-button-toggle>
-        <mat-button-toggle (click)="search2 = '17740'; applyFilter2();">Kísérő</mat-button-toggle>
-        <mat-button-toggle (click)="search2 = '17741'; applyFilter2();">Kísérő - MFF</mat-button-toggle>
+        <ng-container *ngFor="let variationId of objectKeys(ticketStatistics)">
+          <mat-button-toggle (click)="search2 = variationId; applyFilter2();">
+            {{ configService.getVariation(variationId) }}
+          </mat-button-toggle>
+        </ng-container>
       </mat-button-toggle-group>
     </p>
     <mat-form-field appearance="standard">

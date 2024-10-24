@@ -1,18 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { AppConfigService } from '@app/app-config.service';
 
 @Pipe({name: 'variationPipe'})
 export class VariationPipe implements PipeTransform {
+  constructor(private configService: AppConfigService) {}
+
   transform(value: string): string {
-    switch (value) {
-      case '17738':
-        return 'SE polgár';
-      case '17739':
-        return 'SE polgár - MFF';
-      case '17740':
-        return 'Kísérő';
-      case '17741':
-        return 'Kísérő - MFF';
-    }
-    return 'N/A';
+    return this.configService.getVariation(value);
   }
 }
