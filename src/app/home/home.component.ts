@@ -12,6 +12,7 @@ import * as XLSX from 'xlsx';
 import {MatDialog} from '@angular/material/dialog';
 import {EditDialog} from '@app/home/edit-dialog/edit.dialog';
 import {CheckinDialog} from '@app/home/ticket-dialog/checkin.dialog';
+import {AppConfigService} from "@app/app-config.service";
 
 @Component({templateUrl: 'home.component.html', styleUrls: ['home.component.scss', 'mat-table-responsive/mat-table-responsive.directive.scss']})
 export class HomeComponent implements OnInit {
@@ -27,8 +28,6 @@ export class HomeComponent implements OnInit {
   pass = "";
 
 
-  eventId = "15652";
-
   @ViewChild('TableOnePaginator', {static: true}) tableOnePaginator: MatPaginator;
   @ViewChild('TableOneSort', {static: true}) tableOneSort: MatSort;
   @ViewChild('TableTwoPaginator', {static: true}) tableTwoPaginator: MatPaginator;
@@ -39,15 +38,12 @@ export class HomeComponent implements OnInit {
   checkedIn: number;
   checkedIn5: number;
   ticketCouponSum: number;
-  ticketSum1: number;
-  ticketSum2: number;
-  ticketSum3: number;
-  ticketSum4: number;
+  ticketStatistics: { [key: string]: number } = {};
   lastCheck = 0;
   autoRefresh = false;
   event: WooComerceEvent;
 
-  constructor(private dataService: DataService, private authenticationService: AuthenticationService, public dialog: MatDialog) { }
+  constructor(private dataService: DataService, private authenticationService: AuthenticationService, public dialog: MatDialog, public configService: AppConfigService) { }
 
   ngOnInit(): void  {
     this.hardReload();
@@ -137,10 +133,7 @@ export class HomeComponent implements OnInit {
       this.checkedIn = 0;
       this.checkedIn5 = 0;
       this.ticketCouponSum = 0;
-      this.ticketSum1 = 0;
-      this.ticketSum2 = 0;
-      this.ticketSum3 = 0;
-      this.ticketSum4 = 0;
+      this.ticketStatistics = {};
       this.lastCheck = 0;
 
       if (data.message === false) {
@@ -149,22 +142,21 @@ export class HomeComponent implements OnInit {
       }
 
       this.event = data[0];
+
       this.event.eventTickets.forEach(ticket => {
         if (ticket.WooCommerceEventsStatus === 'Checked In') {
           this.checkedIn++;
         }
 
-        if (ticket.WooCommerceEventsVariationID === '17738') {
-          this.ticketSum1++;
-        } else if (ticket.WooCommerceEventsVariationID === '17739') {
-          this.ticketSum2++;
-        } else if (ticket.WooCommerceEventsVariationID === '17740') {
-          this.ticketSum3++;
-        } else if (ticket.WooCommerceEventsVariationID === '17741') {
-          this.ticketSum4++;
-        }
+        const variationId = ticket.WooCommerceEventsVariationID;
 
-          ticket.attendeeId = ticket.WooCommerceEventsCustomAttendeeFields['Fényképes igazolvány szám/ID number'];
+        if (!this.ticketStatistics[variationId]) {
+          this.ticketStatistics[variationId] = 0;
+        }
+        this.ticketStatistics[variationId]++;
+
+
+        ticket.attendeeId = ticket.WooCommerceEventsCustomAttendeeFields['Fényképes igazolvány szám/ID number'];
         ticket.attendeeName = ticket.WooCommerceEventsCustomAttendeeFields['Név/Name'];
         ticket.accompanist = ticket.WooCommerceEventsCustomAttendeeFields['Kísérő neve'];
         ticket.WooCommerceEventsCustomAttendeeFields = null;
@@ -228,8 +220,10 @@ export class HomeComponent implements OnInit {
   }
 
   modifyEventPass() {
-    this.dataService.modifyEventPass(this.eventId, this.pass).subscribe(data => {
+    this.dataService.modifyEventPass(this.event.WooCommerceEventsProductID, this.pass).subscribe(data => {
       console.log('modified event pass ' + data);
     });
   }
+
+  objectKeys = Object.keys;
 }

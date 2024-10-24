@@ -19,7 +19,7 @@ export class CheckinDialog implements AfterViewInit {
   filteredOptions: Observable<Ticket[]>;
   search: string;
   selectedTicket: Ticket;
-  codeReader = true;
+  codeReader = false;
   color = "white";
   oldStatus : string;
 
