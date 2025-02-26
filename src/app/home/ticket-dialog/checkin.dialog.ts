@@ -97,6 +97,10 @@ export class CheckinDialog implements AfterViewInit {
     }
   }
 
+  async delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   async scanBarcode() {
     const devices = await navigator.mediaDevices.enumerateDevices();
     const videoInputDevices = devices.filter(device => device.kind === 'videoinput');
@@ -105,12 +109,13 @@ export class CheckinDialog implements AfterViewInit {
     try {
       if (videoInputDevices.length > 0) {
         this.cameraRun = true;
+        const deviceId = videoInputDevices[this.cameraIndex].deviceId;
         do {
-          const deviceId = videoInputDevices[this.cameraIndex].deviceId;
           const result = await this.camera.decodeOnceFromVideoDevice(deviceId, 'video');
           this.checkIn(result.getText());
+          navigator.vibrate(200);
+          await this.delay(8000);
         } while(this.cameraRun)
-
       } else {
         throw new NotFoundException("Camera not found");
       }
