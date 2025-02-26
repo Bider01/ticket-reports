@@ -4,9 +4,15 @@
   }
 </style>
 
-<h1 mat-dialog-title>Beléptetés</h1>
+<h1 mat-dialog-title>Beléptetés <span>
+  <mat-slide-toggle
+  class="example-margin" [(ngModel)]="phoneMode" (change)="modeChange($event)">
+     <mat-icon>{{ phoneMode ? 'smartphone' : 'desktop_windows' }}</mat-icon>
+  </mat-slide-toggle>
+  <mat-icon class="camera-icon" (click)="changeCamera()" *ngIf="phoneMode" style="color: blue; float: right;">camera</mat-icon>
+</span></h1>
 <div mat-dialog-content [style.backgroundColor]="color">
-  <form class="checkin-form">
+  <form class="checkin-form" *ngIf="!phoneMode">
     <mat-form-field class="full-width" appearance="fill">
       <mat-label>Meghívó</mat-label>
       <input type="text"
@@ -27,6 +33,10 @@
       </button>
     </mat-form-field>
   </form>
+  <div *ngIf="phoneMode" style="text-align: center;">
+    <b *ngIf="!cameraRun" style="color: red;">Camera error!</b>
+    <video id="video" height="200" *ngIf="cameraRun"></video>
+  </div>
   <div *ngIf="selectedTicket" style="text-align: center;line-height: 20px;font-size: 18px;">
     Név: <b>{{selectedTicket.attendeeName}}</b><br>
     ID: <b>{{selectedTicket.attendeeId}}</b><br>
@@ -41,5 +51,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Bezárás</button>
-  <mat-checkbox class="example-margin" [(ngModel)]="codeReader" style="margin-left: 10px;margin-top: 10px;">Code reader</mat-checkbox>
+  <mat-checkbox class="example-margin" [(ngModel)]="codeReader" style="margin-left: 10px;margin-top: 10px;" *ngIf="!phoneMode">Code reader</mat-checkbox>
 </div>

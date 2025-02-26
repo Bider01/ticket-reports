@@ -5,6 +5,7 @@ import {DataService} from '@app/_services';
 import {FormControl} from '@angular/forms';
 import {map, startWith} from 'rxjs/operators';
 import {observable, Observable} from 'rxjs';
+import {BrowserMultiFormatReader, NotFoundException} from "@zxing/library";
 
 export interface CheckinDialogData {
   tickets: Ticket[];
@@ -23,6 +24,12 @@ export class CheckinDialog implements AfterViewInit {
   color = "white";
   oldStatus : string;
 
+  phoneMode: boolean;
+  cameraRun: boolean;
+  camera: BrowserMultiFormatReader;
+  cameraIndex = 0;
+  cameraIndexMax: number;
+
   @ViewChild('search') private searchRef: ElementRef;
 
   constructor(
@@ -36,8 +43,8 @@ export class CheckinDialog implements AfterViewInit {
     );
 
     this.myControl.valueChanges.subscribe(observable => {
-      if(observable.match(/^[0-9]{11}$/) != null) {
-        this.checkIn(observable);
+      if(observable.match(/^[0-9ö]{11}$/) != null) {
+        this.checkIn(observable.replace('ö','0'));
         this.myControl.setValue('');
       }
     });
@@ -77,5 +84,53 @@ export class CheckinDialog implements AfterViewInit {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  modeChange(event: any) {
+    if (this.phoneMode) {
+      if(this.camera == undefined) {
+        this.camera = new BrowserMultiFormatReader();
+      }
+      this.scanBarcode();
+    } else {
+      this.camera.reset();
+    }
+  }
+
+  async scanBarcode() {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const videoInputDevices = devices.filter(device => device.kind === 'videoinput');
+    this.cameraIndexMax = videoInputDevices.length;
+
+    try {
+      if (videoInputDevices.length > 0) {
+        this.cameraRun = true;
+        do {
+          const deviceId = videoInputDevices[this.cameraIndex].deviceId;
+          const result = await this.camera.decodeOnceFromVideoDevice(deviceId, 'video');
+          this.checkIn(result.getText());
+        } while(this.cameraRun)
+
+      } else {
+        throw new NotFoundException("Camera not found");
+      }
+    } finally {
+      this.cameraRun = false;
+    }
+  }
+
+  changeCamera() {
+    if(!this.cameraRun) {
+      this.scanBarcode();
+    } else {
+      if((this.cameraIndex + 1) >= this.cameraIndexMax) {
+        this.cameraIndex = 0;
+      } else {
+        this.cameraIndex++;
+      }
+      console.log("index: " + this.cameraIndex + ", max: " + this.cameraIndexMax);
+      this.camera.reset();
+      this.scanBarcode();
+    }
   }
 }
