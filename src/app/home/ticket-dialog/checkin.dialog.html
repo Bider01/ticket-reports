@@ -35,7 +35,10 @@
   </form>
   <div *ngIf="phoneMode" style="text-align: center;">
     <b *ngIf="!cameraRun" style="color: yellow;">Camera error!</b>
-    <video id="video" height="200" *ngIf="cameraRun"></video>
+    <div class="loading-overlay" *ngIf="locked">
+      <p>Ticket checked</p>
+    </div>
+    <video id="video" height="300px" width="400px" *ngIf="cameraRun"></video>
   </div>
   <div *ngIf="selectedTicket" style="text-align: center;line-height: 20px;font-size: 18px;">
     Név: <b>{{selectedTicket.attendeeName}}</b><br>

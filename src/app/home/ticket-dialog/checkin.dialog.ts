@@ -14,6 +14,7 @@ export interface CheckinDialogData {
 @Component({
   selector: 'checkin-dialog',
   templateUrl: 'checkin.dialog.html',
+  styleUrls: ['checkin.dialog.scss']
 })
 export class CheckinDialog implements AfterViewInit {
   myControl = new FormControl('');
@@ -29,6 +30,7 @@ export class CheckinDialog implements AfterViewInit {
   camera: BrowserMultiFormatReader;
   cameraIndex = 0;
   cameraIndexMax: number;
+  locked = false;
 
   @ViewChild('search') private searchRef: ElementRef;
 
@@ -113,14 +115,17 @@ export class CheckinDialog implements AfterViewInit {
         do {
           const result = await this.camera.decodeOnceFromVideoDevice(deviceId, 'video');
           this.checkIn(result.getText());
-          navigator.vibrate(200);
-          await this.delay(8000);
+          this.locked = true;
+          await this.delay(4000);
+          this.locked = false;
         } while(this.cameraRun)
       } else {
         throw new NotFoundException("Camera not found");
       }
     } finally {
       this.cameraRun = false;
+      this.locked = false;
+      this.camera.reset();
     }
   }
 
@@ -133,7 +138,6 @@ export class CheckinDialog implements AfterViewInit {
       } else {
         this.cameraIndex++;
       }
-      console.log("index: " + this.cameraIndex + ", max: " + this.cameraIndexMax);
       this.camera.reset();
       this.scanBarcode();
     }
