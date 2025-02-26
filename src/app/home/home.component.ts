@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   search = '';
   search2 = '';
   editMode = false;
-  adminMode =  (localStorage.getItem('admin') == 'true');
+  adminMode = (localStorage.getItem('admin') == 'true');
   onlineOffline: boolean;
   pass = "";
 
