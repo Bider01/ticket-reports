@@ -7,7 +7,7 @@
   <mat-icon>autorenew</mat-icon></button></p>
 <p *ngIf="lastCheck == 0">betöltés...</p>
 <h3>Rendezvény: {{this.event?.WooCommerceEventsName}}</h3>
-<div class="card-container" *ngIf="lastCheck != 0">
+<div class="card-container" *ngIf="lastCheck != 0 && adminMode">
   <ng-container *ngFor="let variationId of objectKeys(ticketStatistics)">
     <mat-card class="check-in-stat">
       <mat-card-title>{{ configService.getVariation(variationId) }}</mat-card-title>
@@ -18,8 +18,8 @@
     </mat-card>
   </ng-container>
 </div>
-<div class="card-container" *ngIf="lastCheck != 0">
-  <mat-card class="check-in-stat">
+<div class="card-container" *ngIf="lastCheck != 0" >
+  <mat-card class="check-in-stat" *ngIf="adminMode">
     <mat-card-title>Belépések</mat-card-title>
     <mat-card-subtitle>összes</mat-card-subtitle>
     <mat-card-content>
@@ -49,7 +49,7 @@
       <p><a (click)="exportExcel()"><mat-icon aria-label="Letöltés" style="font-size: 48px;width: 48px;height: 48px;">get_app</mat-icon></a></p>
     </mat-card-content>
   </mat-card>
-  <mat-card class="check-in-stat" style="background-color: lightskyblue;">
+  <mat-card class="check-in-stat" style="background-color: lightskyblue;" *ngIf="adminMode">
     <mat-card-title>Esemény</mat-card-title>
     <mat-card-subtitle>Vásárlás jelszó</mat-card-subtitle>
     <mat-card-content>
@@ -60,7 +60,7 @@
     </mat-card-content>
   </mat-card>
 </div>
-<div class="card mt-4">
+<div class="card mt-4" *ngIf="adminMode">
     <h4 class="card-header">Belépések</h4>
     <div class="card-body">
       <button mat-raised-button (click)="deleteTestTickets()">Teszt jegy logok törlése</button>
@@ -111,7 +111,7 @@
       </div>
     </div>
 </div>
-<div class="card mt-4">
+<div class="card mt-4" *ngIf="adminMode">
   <h4 class="card-header">Meghívók</h4>
   <div class="card-body">
     <section class="example-section">
