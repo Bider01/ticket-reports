@@ -36,8 +36,8 @@ export class CheckinDialog implements AfterViewInit {
     );
 
     this.myControl.valueChanges.subscribe(observable => {
-      if(observable.match(/^[0-9]{11}$/) != null) {
-        this.checkIn(observable);
+      if(observable.match(/^[0-9ö]{11}$/) != null) {
+        this.checkIn(observable.replace('ö','0'));
         this.myControl.setValue('');
       }
     });
