@@ -6,7 +6,7 @@
   <button mat-icon-button color="primary" aria-label="Refresh" (click)="hardReload()" class="refresh">
   <mat-icon>autorenew</mat-icon></button></p>
 <p *ngIf="lastCheck == 0">betöltés...</p>
-<h3>Rendezvény: {{this.event.WooCommerceEventsName}}</h3>
+<h3>Rendezvény: {{this.event?.WooCommerceEventsName}}</h3>
 <div class="card-container" *ngIf="lastCheck != 0">
   <ng-container *ngFor="let variationId of objectKeys(ticketStatistics)">
     <mat-card class="check-in-stat">
