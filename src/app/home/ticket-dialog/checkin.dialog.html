@@ -34,7 +34,7 @@
     </mat-form-field>
   </form>
   <div *ngIf="phoneMode" style="text-align: center;">
-    <b *ngIf="!cameraRun" style="color: red;">Camera error!</b>
+    <b *ngIf="!cameraRun" style="color: yellow;">Camera error!</b>
     <video id="video" height="200" *ngIf="cameraRun"></video>
   </div>
   <div *ngIf="selectedTicket" style="text-align: center;line-height: 20px;font-size: 18px;">
