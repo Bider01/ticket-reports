@@ -60,7 +60,7 @@
     </mat-card-content>
   </mat-card>
 </div>
-<div class="card mt-4" *ngIf="adminMode">
+<div class="card mt-4" [hidden]="!adminMode">
     <h4 class="card-header">Belépések</h4>
     <div class="card-body">
       <button mat-raised-button (click)="deleteTestTickets()">Teszt jegy logok törlése</button>
@@ -111,7 +111,7 @@
       </div>
     </div>
 </div>
-<div class="card mt-4" *ngIf="adminMode">
+<div class="card mt-4" [hidden]="!adminMode">
   <h4 class="card-header">Meghívók</h4>
   <div class="card-body">
     <section class="example-section">
