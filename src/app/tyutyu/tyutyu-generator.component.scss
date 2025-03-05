@@ -1,0 +1,65 @@
+@font-face {
+  font-family: 'Hermione';
+  src: url('Hermione-Regular.otf') format('truetype');
+}
+
+.container {
+  max-width: 500px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  text-align: center;
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  textarea {
+    width: 100%;
+    height: 100px;
+    font-size: 1.2rem;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-family: 'Hermione', sans-serif;
+    text-transform: uppercase;
+    white-space: pre-wrap;
+  }
+
+  .error-message {
+    background: red;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .preview-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fafafa;
+    border: 2px solid #000;
+    width: 500px;
+    height: 350px;
+    margin: auto;
+  }
+
+  .measurements {
+    margin-top: 15px;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #ddd;
+      padding: 5px;
+      margin-bottom: 5px;
+    }
+  }
+}
+

@@ -1,0 +1,39 @@
+<div class="container">
+  <h2>Tyütyü Szöveg Generátor</h2>
+
+  <textarea [(ngModel)]="inputText" placeholder="Írj be egy szöveget..." (input)="formatText()"></textarea>
+
+  <!-- Hibaüzenet megjelenítése, ha van -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div class="preview-container">
+    <div class="preview">
+      <div *ngFor="let line of formattedText" class="line">
+        <div class="spacing" [style.width.px]="calculateSidePadding(calculateWidth(line)) * 10"></div>
+        <span *ngFor="let char of line; let i = index" class="char"
+              [ngStyle]="{'width.px': (letterWidths[char] || defaultWidth) * 10}">
+          {{ char }}
+          <span class="size">{{ letterWidths[char] || defaultWidth }} cm</span>
+        </span>
+        <div class="spacing" [style.width.px]="calculateSidePadding(calculateWidth(line)) * 10"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="measurements">
+    <h3>Méretek:</h3>
+    <ul>
+      <li *ngFor="let line of formattedText">
+        "{{ line }}" - {{ calculateWidth(line) }} cm széles
+        (Kétoldali térköz: {{ calculateSidePadding(calculateWidth(line)) }} cm)
+      </li>
+      <li>Sorok száma: {{ formattedText.length }}</li>
+      <li>Betűk magassága: {{ letterHeight }} cm</li>
+      <li>Sorok közötti távolság: {{ lineHeight }} cm</li>
+      <li>Betűköz: {{ letterSpacing }} cm</li>
+      <li>Szóköz: {{ wordSpacing }} cm</li>
+    </ul>
+  </div>
+</div>

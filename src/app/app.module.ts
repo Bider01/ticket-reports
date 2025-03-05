@@ -30,6 +30,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import {CheckinDialog} from '@app/home/ticket-dialog/checkin.dialog';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {AppConfigService} from "@app/app-config.service";
+import {TyutyuGeneratorComponent} from "@app/tyutyu/tyutyu-generator.component";
 
 export function loadAppConfig(configService: AppConfigService) {
   return () => configService.loadConfig();
@@ -69,7 +70,8 @@ export function loadAppConfig(configService: AppConfigService) {
     LoginComponent,
     VariationPipe,
     EditDialog,
-    CheckinDialog
+    CheckinDialog,
+    TyutyuGeneratorComponent
   ],
     providers: [
         {
